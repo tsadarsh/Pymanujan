@@ -5,6 +5,23 @@ from tkinter import StringVar
 
 OPERATORS = ['*', '/', '-', '+']
 SPECIAL = ['C', 'AC']
+BODMAS = ['/', '*', '+', '-']
+LEFT, RIGHT = 1, 1
+CALCULATOR = {'/':LEFT/RIGHT,
+              '*':LEFT*RIGHT,
+              '+':LEFT+RIGHT,
+              '-':LEFT-RIGHT}
+
+def isonlydecimal(char):
+    for i in char:
+        if i.isdigit() or i == '.':
+            continue
+        else:
+            return False
+    return True
+
+def isnotdecimal(char):
+    return not isonlydecimal(char)
 
 ''' GUI '''
 root = Tk()
@@ -40,14 +57,46 @@ def cout(char):
 
     DISPLAY.set(TO_BE_DISPLAYED)
 
+def partial_calculate(STORAGE, OPERATOR_POS, PARTIAL_LEFT, PARIAL_RIGHT):
+    global LEFT, RIGHT
+    global CALCULATOR
+    print("STORAGE:", STORAGE)
+    print('LEFT:', STORAGE[PARTIAL_LEFT : OPERATOR_POS])
+    print('RIGHT:', STORAGE[OPERATOR_POS+1 : PARIAL_RIGHT+1])
+    LEFT = float(STORAGE[PARTIAL_LEFT : OPERATOR_POS])
+    RIGHT = float(STORAGE[OPERATOR_POS+1 : PARIAL_RIGHT+1])
+    OPERATOR = STORAGE[OPERATOR_POS]
+    
+    return CALCULATOR.get(OPERATOR)
+    
+
 def calculate():
     global STORAGE
-    STORAGE = STORAGE.lstrip()
+    global DISPLAY
+    global BODMAS
 
-    if STORAGE.
+    STORAGE = STORAGE.lstrip()
+    
+    if isonlydecimal(STORAGE):
+        ''' Displaying final result '''
+        DISPLAY.set('Ans: '+STORAGE)
     if STORAGE[0] in OPERATORS:
         ''' Trivial ambiguity, '-10+23' results to '0-10+23' '''
         STORAGE = '0'+STORAGE
+        
+    for i in BODMAS:
+        if i in STORAGE:
+            OPERATOR_POS = STORAGE.find(i)
+            for i in range(OPERATOR_POS, 0, -1):
+                if isnotdecimal(STORAGE[i]):
+                    PARTIAL_LEFT = i+1
+            for i in range(OPERATOR_POS, len(STORAGE)):
+                if isnotdecimal(STORAGE[i]):
+                    PARTIAL_RIGHT = i-1
+    SUB_RESULT = partial_calculate(STORAGE, OPERATOR_POS, PARTIAL_LEFT, PARTIAL_RIGHT)
+    STORAGE = STORAGE[:PARTIAL_LEFT] + SUB_RESULT + STORAGE[PARTIAL_RIGHT+1:]
+    DISPLAY.set('Ans: '+STORAGE)
+    calculate()
 
 content = ttk.Frame(master=root, padding=(3, 3, 3, 3))
 mainframe = ttk.Frame(content, relief = 'sunken')
