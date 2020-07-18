@@ -6,7 +6,7 @@ from tkinter import StringVar
 OPERATORS = ['*', '/', '-', '+']
 SPECIAL = ['C', 'AC']
 BODMAS = ['/', '*', '+', '-']
-LEFT, RIGHT = 1, 1
+''' LEFT and RIGHT globally defined variables '''
 CALCULATOR = {'/':LEFT/RIGHT,
               '*':LEFT*RIGHT,
               '+':LEFT+RIGHT,
@@ -14,41 +14,53 @@ CALCULATOR = {'/':LEFT/RIGHT,
 
 def isonlydecimal(char):
     for i in char:
-        if i.isdigit() or i == '.':
+        if i.isdecimal() or i == '.':
             continue
         else:
             return False
     return True
 
 def isnotdecimal(char):
-    return not isonlydecimal(char)
+    return False if isonlydecimal(char) else True
 
 ''' GUI '''
 root = Tk()
 
 DISPLAY = StringVar()
 DISPLAY.set(' ')
-STORAGE = ' '
+STORAGE = [None]
 
 def cout(char):
+    ''' Responisble for displaying result and inputing in STORAGE '''
     global DISPLAY
     global STORAGE
 
-    if char in OPERATORS and STORAGE[-1] in OPERATORS:
-        ''' Switching to latest operator, example: '3+-' evalutes to '3-' '''
-        STORAGE = STORAGE[:-1]+char
+    if char in OPERATORS:
+        if STORAGE[-1] in OPERATORS:
+            ''' Switching to latest operator, example: '3+-' evalutes to '3-' '''
+            STORAGE[-1] = char
+        else:
+            STORAGE += list(char)
     else:
         if char in SPECIAL:
             ''' Check if input is for 'Clear' or 'All Clear' '''
             if char == 'C':
                 STORAGE = STORAGE[:-1]
             else:
-                STORAGE = ' '
+                STORAGE = [None]
         else:
-            STORAGE += char
+            ''' First element input case '''
+            if STORAGE[-1] == None:
+                STORAGE.append(char)
+            else:
+                if STORAGE[-1] in OPERATORS:
+                    STORAGE += list(char)
+                else:
+                    STORAGE[-1] += char
 
     TO_BE_DISPLAYED = ''
-    for i in STORAGE:
+    for i in STORAGE[1:]:
+        ''' Excluding first element 'None' '''
         if i in OPERATORS:
             ''' Spacing around OPERATORS '''
             TO_BE_DISPLAYED += (' '+i+' ')
@@ -57,46 +69,40 @@ def cout(char):
 
     DISPLAY.set(TO_BE_DISPLAYED)
 
-def partial_calculate(STORAGE, OPERATOR_POS, PARTIAL_LEFT, PARIAL_RIGHT):
+def partial_calculate(OPERATOR_POS, PARTIAL_LEFT, PARIAL_RIGHT):
+    ''' Evalutes expression one block at a time '''
     global LEFT, RIGHT
     global CALCULATOR
-    print("STORAGE:", STORAGE)
-    print('LEFT:', STORAGE[PARTIAL_LEFT : OPERATOR_POS])
-    print('RIGHT:', STORAGE[OPERATOR_POS+1 : PARIAL_RIGHT+1])
-    LEFT = float(STORAGE[PARTIAL_LEFT : OPERATOR_POS])
-    RIGHT = float(STORAGE[OPERATOR_POS+1 : PARIAL_RIGHT+1])
+
+    LEFT = float(STORAGE[PARTIAL_LEFT])
     OPERATOR = STORAGE[OPERATOR_POS]
+    RIGHT = float(STORAGE[PARIAL_RIGHT])
     
-    return CALCULATOR.get(OPERATOR)
-    
+    if OPERATOR == '/':
+        return LEFT/RIGHT
+    elif OPERATOR == '*':
+        return LEFT*RIGHT
+    elif OPERATOR == '+':
+        return LEFT+RIGHT
+    else:
+        return LEFT-RIGHT
 
 def calculate():
+    ''' Redirects expression to partial_calculate one block at a time '''
     global STORAGE
     global DISPLAY
     global BODMAS
-
-    STORAGE = STORAGE.lstrip()
     
-    if isonlydecimal(STORAGE):
-        ''' Displaying final result '''
-        DISPLAY.set('Ans: '+STORAGE)
-    if STORAGE[0] in OPERATORS:
-        ''' Trivial ambiguity, '-10+23' results to '0-10+23' '''
-        STORAGE = '0'+STORAGE
-        
     for i in BODMAS:
         if i in STORAGE:
-            OPERATOR_POS = STORAGE.find(i)
-            for i in range(OPERATOR_POS, 0, -1):
-                if isnotdecimal(STORAGE[i]):
-                    PARTIAL_LEFT = i+1
-            for i in range(OPERATOR_POS, len(STORAGE)):
-                if isnotdecimal(STORAGE[i]):
-                    PARTIAL_RIGHT = i-1
-    SUB_RESULT = partial_calculate(STORAGE, OPERATOR_POS, PARTIAL_LEFT, PARTIAL_RIGHT)
-    STORAGE = STORAGE[:PARTIAL_LEFT] + SUB_RESULT + STORAGE[PARTIAL_RIGHT+1:]
-    DISPLAY.set('Ans: '+STORAGE)
-    calculate()
+            ITTER = STORAGE.count(i)
+            for j in range(ITTER):
+                OPERATOR_POS = STORAGE.index(i)
+                PARTIAL_LEFT = OPERATOR_POS - 1
+                PARTIAL_RIGHT = OPERATOR_POS + 1
+                SUB_RESULT = partial_calculate(OPERATOR_POS, PARTIAL_LEFT, PARTIAL_RIGHT)
+                STORAGE[OPERATOR_POS] = str(SUB_RESULT); STORAGE.pop(PARTIAL_LEFT); STORAGE.pop(PARTIAL_RIGHT-1)
+    DISPLAY.set('Ans: '+STORAGE[1])
 
 content = ttk.Frame(master=root, padding=(3, 3, 3, 3))
 mainframe = ttk.Frame(content, relief = 'sunken')
