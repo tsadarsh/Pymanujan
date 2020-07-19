@@ -6,11 +6,6 @@ from tkinter import StringVar
 OPERATORS = ['*', '/', '-', '+']
 SPECIAL = ['C', 'AC']
 BODMAS = ['/', '*', '+', '-']
-''' LEFT and RIGHT globally defined variables '''
-CALCULATOR = {'/':LEFT/RIGHT,
-              '*':LEFT*RIGHT,
-              '+':LEFT+RIGHT,
-              '-':LEFT-RIGHT}
 
 def isonlydecimal(char):
     for i in char:
@@ -34,9 +29,19 @@ def cout(char):
     ''' Responisble for displaying result and inputing in STORAGE '''
     global DISPLAY
     global STORAGE
+    global OPERATORS
 
     if char in OPERATORS:
-        if STORAGE[-1] in OPERATORS:
+        if STORAGE[-1] == None:
+            if char in OPERATORS[:2]:
+                ''' Case when first input is '/' or '*' '''
+                STORAGE.append('1')
+                STORAGE += list(char)
+            else:
+                ''' Case when first input is '+' or '-' '''
+                STORAGE.append('0')
+                STORAGE += list(char)
+        elif STORAGE[-1] in OPERATORS:
             ''' Switching to latest operator, example: '3+-' evalutes to '3-' '''
             STORAGE[-1] = char
         else:
@@ -49,15 +54,18 @@ def cout(char):
             else:
                 STORAGE = [None]
         else:
-            ''' First element input case '''
             if STORAGE[-1] == None:
+                ''' First element input case '''
                 STORAGE.append(char)
             else:
+                ''' Subsequent input case '''
                 if STORAGE[-1] in OPERATORS:
+                    ''' Subsequent operator input case '''
                     STORAGE += list(char)
                 else:
+                    ''' Subsequent appending of continuing digits '''
                     STORAGE[-1] += char
-
+    print('STORAGE:', STORAGE)
     TO_BE_DISPLAYED = ''
     for i in STORAGE[1:]:
         ''' Excluding first element 'None' '''
