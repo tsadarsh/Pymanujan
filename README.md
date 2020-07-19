@@ -1,2 +1,3 @@
 # PyCalc
-Calculator powered by Python
+## Python powered Calculator.
+### As simple as that
