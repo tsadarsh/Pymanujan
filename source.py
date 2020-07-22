@@ -11,7 +11,14 @@ CACHE = None
 
 root = Tk()
 root.title("PyCalc")
+#root.geometry("200x100")
 root.resizable(False, False)
+
+# GUI theme
+s = ttk.Style()
+s.theme_use('clam')
+s.configure("TButton", width='5', padding = '10')
+s.configure("TLabel", font='helvetica 24')
 
 DISPLAY = StringVar()
 DISPLAY.set(' ')
@@ -145,26 +152,59 @@ copy = ttk.Button(keypad, text='Copy', command=lambda: cout('Copy')).grid(row=5,
 
 # num-pad key bindings
 root.bind("*", lambda e: cout('*'))
+root.bind("<KP_Multiply>", lambda e: cout('*'))
+
 root.bind("/", lambda e: cout('/'))
+root.bind("<KP_Divide>", lambda e: cout('/'))
+
 root.bind("C", lambda e: cout('C'))
 root.bind("c", lambda e: cout('C'))
+
 root.bind("Q", lambda e: cout('AC'))
 root.bind("q", lambda e: cout('AC'))
+root.bind("<Escape>", lambda e: cout('AC'))
+
 root.bind("-", lambda e: cout('-'))
+root.bind("<KP_Subtract>", lambda e: cout('-'))
+
 root.bind("+", lambda e: cout('+'))
+root.bind("<KP_Add>", lambda e: cout('+'))
+
 root.bind("=", lambda e: calculate())
-root.bind("<Return>", calculate)
+root.bind("<Return>", lambda e: calculate())
+root.bind("<KP_Enter>", lambda e: calculate())
 
 root.bind("9", lambda e: cout('9'))
+root.bind("<KP_9>", lambda e: cout('9'))
+
 root.bind("8", lambda e: cout('8'))
+root.bind("<KP_8>", lambda e: cout('8'))
+
 root.bind("7", lambda e: cout('7'))
+root.bind("<KP_7>", lambda e: cout('7'))
+
 root.bind("6", lambda e: cout('6'))
+root.bind("<KP_6>", lambda e: cout('6'))
+
 root.bind("5", lambda e: cout('5'))
+root.bind("<KP_5>", lambda e: cout('5'))
+
 root.bind("4", lambda e: cout('4'))
+root.bind("<KP_4>", lambda e: cout('4'))
+
 root.bind("3", lambda e: cout('3'))
+root.bind("<KP_3>", lambda e: cout('3'))
+
 root.bind("2", lambda e: cout('2'))
+root.bind("<KP_2>", lambda e: cout('2'))
+
 root.bind("1", lambda e: cout('1'))
+root.bind("<KP_1>", lambda e: cout('1'))
+
 root.bind(".", lambda e: cout('.'))
+root.bind("<KP_Decimal>", lambda e: cout('.'))
+
 root.bind("0", lambda e: cout('0'))
+root.bind("<KP_0>", lambda e: cout('0'))
 
 root.mainloop()
