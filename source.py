@@ -18,7 +18,12 @@ root.resizable(False, False)
 s = ttk.Style()
 s.theme_use('clam')
 s.configure("TButton", width='5', padding = '10')
-s.configure("TLabel", font='helvetica 24')
+'''
+from tkinter import Tk, font
+root = Tk()
+font.families()
+'''
+s.configure("TLabel", font='Helvetica 24')
 
 DISPLAY = StringVar()
 DISPLAY.set(' ')
@@ -120,35 +125,35 @@ content = ttk.Frame(master=root, padding=(3, 3, 3, 3))
 mainframe = ttk.Frame(content, relief = 'sunken')
 
 # result display
-display = ttk.Frame(mainframe, relief='sunken').grid(row=0, column=0, columnspan=4)
-
-val_display = ttk.Label(display, textvariable=DISPLAY).grid(row=0, column=0, columnspan=4, sticky=E)
+display = ttk.Frame(mainframe, relief='flat')
+display['borderwidth'] = 10
+val_display = ttk.Label(display, textvariable=DISPLAY)
 
 # operations
-keypad = ttk.Frame(mainframe).grid()
+keypad = ttk.Frame(mainframe)
 
-mul = ttk.Button(keypad, text='*', command=lambda: cout('*')).grid(row=1, column=0)
-div = ttk.Button(keypad, text='/', command=lambda: cout('/')).grid(row=1, column=1)
-clear = ttk.Button(keypad, text='C', command=lambda: cout('C')).grid(row=1, column=2)
-allClear = ttk.Button(keypad, text='AC', command=lambda: cout('AC')).grid(row=1, column=3)
-sub = ttk.Button(keypad, text='-', command=lambda: cout('-')).grid(row=2, column=3)
-add = ttk.Button(keypad, text='+', command=lambda: cout('+')).grid(row=3, column=3)
-equal = ttk.Button(keypad, text='=', command=calculate).grid(row=4, column=3)
+mul = ttk.Button(keypad, text='*', command=lambda: cout('*'))
+div = ttk.Button(keypad, text='/', command=lambda: cout('/'))
+clear = ttk.Button(keypad, text='C', command=lambda: cout('C'))
+allClear = ttk.Button(keypad, text='AC', command=lambda: cout('AC'))
+sub = ttk.Button(keypad, text='-', command=lambda: cout('-'))
+add = ttk.Button(keypad, text='+', command=lambda: cout('+'))
+equal = ttk.Button(keypad, text='=', command=calculate)
 
 # keypad values
-nine = ttk.Button(keypad, text='9', command=lambda: cout('9')).grid(row=2, column=0)
-eight = ttk.Button(keypad, text='8', command=lambda: cout('8')).grid(row=2, column=1)
-seven = ttk.Button(keypad, text='7', command=lambda: cout('7')).grid(row=2, column=2)
-six = ttk.Button(keypad, text='6', command=lambda: cout('6')).grid(row=3, column=0)
-five = ttk.Button(keypad, text='5', command=lambda: cout('5')).grid(row=3, column=1)
-four = ttk.Button(keypad, text='4', command=lambda: cout('4')).grid(row=3, column=2)
-three = ttk.Button(keypad, text='3', command=lambda: cout('3')).grid(row=4, column=0)
-two = ttk.Button(keypad, text='2', command=lambda: cout('2')).grid(row=4, column=1)
-one = ttk.Button(keypad, text='1', command=lambda: cout('1')).grid(row=4, column=2)
-dot = ttk.Button(keypad, text='.', command=lambda: cout('.')).grid(row=5, column=0)
-zero = ttk.Button(keypad, text='0', command=lambda: cout('0')).grid(row=5, column=1)
-plusminus = ttk.Button(keypad, text='+/-', command=lambda: cout('P/M')).grid(row=5, column=2)
-copy = ttk.Button(keypad, text='Copy', command=lambda: cout('Copy')).grid(row=5, column=3)
+nine = ttk.Button(keypad, text='9', command=lambda: cout('9'))
+eight = ttk.Button(keypad, text='8', command=lambda: cout('8'))
+seven = ttk.Button(keypad, text='7', command=lambda: cout('7'))
+six = ttk.Button(keypad, text='6', command=lambda: cout('6'))
+five = ttk.Button(keypad, text='5', command=lambda: cout('5'))
+four = ttk.Button(keypad, text='4', command=lambda: cout('4'))
+three = ttk.Button(keypad, text='3', command=lambda: cout('3'))
+two = ttk.Button(keypad, text='2', command=lambda: cout('2'))
+one = ttk.Button(keypad, text='1', command=lambda: cout('1'))
+dot = ttk.Button(keypad, text='.', command=lambda: cout('.'))
+zero = ttk.Button(keypad, text='0', command=lambda: cout('0'))
+plusminus = ttk.Button(keypad, text='+/-', command=lambda: cout('P/M'))
+copy = ttk.Button(keypad, text='Copy', command=lambda: cout('Copy'))
 
 # num-pad key bindings
 root.bind("*", lambda e: cout('*'))
@@ -206,5 +211,36 @@ root.bind("<KP_Decimal>", lambda e: cout('.'))
 
 root.bind("0", lambda e: cout('0'))
 root.bind("<KP_0>", lambda e: cout('0'))
+
+# Gridding
+content.grid()
+mainframe.grid()
+
+display.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
+val_display.grid(row=0, column=0, columnspan=4, sticky=E)
+
+keypad.grid()
+
+mul.grid(row=1, column=0)
+div.grid(row=1, column=1)
+clear.grid(row=1, column=2)
+allClear.grid(row=1, column=3)
+sub.grid(row=2, column=3)
+add.grid(row=3, column=3)
+equal.grid(row=4, column=3)
+
+nine.grid(row=2, column=0)
+eight.grid(row=2, column=1)
+seven.grid(row=2, column=2)
+six.grid(row=3, column=0)
+five.grid(row=3, column=1)
+four.grid(row=3, column=2)
+three.grid(row=4, column=0)
+two.grid(row=4, column=1)
+one.grid(row=4, column=2)
+dot.grid(row=5, column=0)
+zero.grid(row=5, column=1)
+plusminus.grid(row=5, column=2)
+copy.grid(row=5, column=3)
 
 root.mainloop()
