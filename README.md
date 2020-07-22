@@ -11,7 +11,7 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 
 #### Tasks List :writing_hand:
 - [ ] Add 'Copy' functionality, to copy the result. Currently 'Copy' button does not do anything.
-- [ ] Bind 'Number-pad' keys to enter input.
+- [x] Bind 'Number-pad' keys to enter input.
 - [ ] Option to switch between 'Simple' to 'Advanced' mode. Advanced mode should have more funtionalities.
 
 #### Contribution :nerd_face:
