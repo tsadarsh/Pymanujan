@@ -18,11 +18,6 @@ root.resizable(False, False)
 s = ttk.Style()
 s.theme_use('clam')
 s.configure("TButton", width='5', padding = '10')
-'''
-from tkinter import Tk, font
-root = Tk()
-font.families()
-'''
 s.configure("TLabel", font='Helvetica 24')
 
 DISPLAY = StringVar()
@@ -61,7 +56,7 @@ def cout(char):
                     else:
                         ''' If numner is negative change to positive '''
                         STORAGE[-1] = str(abs(float(STORAGE[-1])))
-            else:
+            if char == 'AC':
                 STORAGE = [None]
         else:
             if STORAGE[-1] == None:
@@ -84,8 +79,14 @@ def cout(char):
             TO_BE_DISPLAYED += (' '+i+' ')
         else:
             TO_BE_DISPLAYED += i
-
-    DISPLAY.set(TO_BE_DISPLAYED)
+    
+    DISPLAY_LENGTH = len(TO_BE_DISPLAYED)
+    if DISPLAY_LENGTH > 12:
+        ''' To show only 12 input characters in DISPLAY '''
+        EXTRA = DISPLAY_LENGTH - 12
+        DISPLAY.set(TO_BE_DISPLAYED[EXTRA:])
+    else:
+        DISPLAY.set(TO_BE_DISPLAYED)
 
 def partial_calculate(OPERATOR_POS, PARTIAL_LEFT, PARIAL_RIGHT):
     ''' Evalutes expression one block at a time '''
