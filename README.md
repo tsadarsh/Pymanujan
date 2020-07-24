@@ -5,7 +5,7 @@ Whole code is written in pure Python :snake:. Moreover, as a beginner myself, ne
 
 Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy_minus_sign:', 'Multiplication :heavy_multiplication_x:' and 'Division :heavy_division_sign:'. Check **Tasks List** issues pending on *feature-requests*. Check **Contribution** for more details to get started on developing the program.
 
-#### User interface of PyCalc *v0.1-alpha* :desktop_computer:
+#### User interface of PyCalc *v0.1-beta* :desktop_computer:
 
 ![As of v0.1-alpha](https://github.com/maddypie/PyCalc/blob/master/PyCalcDemo.png)
 
