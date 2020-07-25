@@ -10,6 +10,7 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 ![As of v0.1-alpha](https://github.com/maddypie/PyCalc/blob/master/PyCalcDemo.png)
 
 #### Tasks List :writing_hand:
+- [ ] **Refactor source.py**
 - [ ] Add 'Copy' functionality, to copy the result. Currently 'Copy' button does not do anything.
 - [x] Bind 'Number-pad' keys to enter input.
 - [ ] Option to switch between 'Simple' to 'Advanced' mode. Advanced mode should have more funtionalities.
