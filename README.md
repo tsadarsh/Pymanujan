@@ -11,12 +11,16 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 
 #### Tasks List :writing_hand:
 - [ ] **Refactor source.py**
-- [ ] Add 'Copy' functionality, to copy the result. Currently 'Copy' button does not do anything.
+- [x] Add 'Copy' functionality, to copy the result. Currently 'Copy' button does not do anything.
 - [x] Bind 'Number-pad' keys to enter input.
 - [ ] Option to switch between 'Simple' to 'Advanced' mode. Advanced mode should have more funtionalities.
 
 #### Contribution :nerd_face:
-All are welcome :pray: to contribute to this project. Start from going through the ```source.py``` which has good amount comments and documentation along the code. Currently the focus is on improving the GUI. Create an *Issue* and start a discussion before working on a seperate *Fork*, collabaration always results in better ideas! 
+All are welcome :pray: to contribute to this project. Start from going through the ```source.py``` which has good amount comments and documentation along the code. Currently the focus is on improving the GUI. Create an *Issue* and start a discussion before working on a seperate *Fork*, collabaration always results in better ideas!
 
 Goal :soccer: towards your contribution should always to be able to improve your expertise on Python :snake:.
 > Though a calculator app is no path-breaking project to work on, it gives confidence to a new-devloper the abilty to build something from scratch.
+
+#### Note for Linux users:
+For 'Copy' button to work as intended, make sure ```xclip``` is installed.
+> sudo apt install xclip
