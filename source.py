@@ -2,7 +2,7 @@ from tkinter import Tk
 from tkinter import E
 from tkinter import ttk
 from tkinter import StringVar
-import pyperclip
+from pyperclip import copy as to_clipboard
 
 OPERATORS = ['*', '/', '-', '+']
 SPECIAL = ['C', 'AC', 'P/M']
@@ -89,10 +89,10 @@ def cout(char):
     else:
         DISPLAY.set(TO_BE_DISPLAYED)
 
-def copytoclipboard():
+def copy_to_clipboard():
     '''copy the content in the app'''
     global STORAGE
-    pyperclip.copy("".join(STORAGE[1:]))
+    return to_clipboard("".join(STORAGE[1:]))
 
 def partial_calculate(OPERATOR_POS, PARTIAL_LEFT, PARIAL_RIGHT):
     ''' Evalutes expression one block at a time '''
@@ -160,7 +160,7 @@ one = ttk.Button(keypad, text='1', command=lambda: cout('1'))
 dot = ttk.Button(keypad, text='.', command=lambda: cout('.'))
 zero = ttk.Button(keypad, text='0', command=lambda: cout('0'))
 plusminus = ttk.Button(keypad, text='+/-', command=lambda: cout('P/M'))
-copy = ttk.Button(keypad, text='Copy', command=lambda: copytoclipboard())
+copy = ttk.Button(keypad, text='Copy', command=lambda: copy_to_clipboard())
 
 # num-pad key bindings
 root.bind("*", lambda e: cout('*'))
