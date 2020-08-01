@@ -7,10 +7,10 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 
 #### User interface of PyCalc *v0.1-beta* :desktop_computer:
 
-![As of v0.1-alpha](https://github.com/maddypie/PyCalc/blob/master/PyCalcDemo.png)
+![As of v0.1-beta](https://github.com/maddypie/PyCalc/blob/master/PyCalcDemo.png)
 
 #### Tasks List :writing_hand:
-- [ ] **Refactor source.py**
+- [x] **Refactor source.py**
 - [x] Add 'Copy' functionality, to copy the result. Currently 'Copy' button does not do anything.
 - [x] Bind 'Number-pad' keys to enter input.
 - [ ] Option to switch between 'Simple' to 'Advanced' mode. Advanced mode should have more funtionalities.
