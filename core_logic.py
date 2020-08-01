@@ -33,4 +33,3 @@ class Calculate():
         right_operand = float(self.expr_as_list[index+1])
         sub_result = self._get_value[operator](left_operand, right_operand)
         self.expr_as_list[index-1:index+2] = [str(sub_result)]
-

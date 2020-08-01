@@ -1,10 +1,11 @@
 from core_logic import Calculate
 from pyperclip import copy as to_clipboard
+from operator import neg
 
 
 class Storage:
     __operators: list = ['/', '*', '+', '-']
-    __special: list = ['C', 'AC', 'P/M']
+    __special: list = ['C', 'AC', 'i']
     __storage: list
     __result: str
 
@@ -65,10 +66,10 @@ class Storage:
             self.__storage.clear()
         if special == 'C':
             self.__storage.pop(-1)
-        if special == 'P/M':
+        if special == 'i':
             ''' Multiplicative inverse of last number chunk.
             Diabled when last input is operator '''
-            self.__storage[-1] *= -1
+            self.__storage[-1] = str(neg(float(self.__storage[-1])))
 
     def __put_digit(self, digit) -> None:
         if len(self.__storage) == 0 or self.__storage[-1] in self.__operators:

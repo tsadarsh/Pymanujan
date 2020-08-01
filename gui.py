@@ -13,14 +13,27 @@ class GUI(Tk):
         self.title("PyCalc v0.1-beta")
         self.resizable(False, False)
         styler = ttk.Style()
-        styler.theme_use("clam")
-        styler.configure("TButton", width='5', padding='10')
-        styler.configure("TLabel", font='Helvetica 24')
+        styler.configure("TLabel",
+                         font='Times 20')
+        styler.configure("TButton",
+                         relief='flat',
+                         width='5',
+                         padding='10',
+                         background='bisque')
+        styler.configure("GreenButton.TButton",
+                         relief='falt',
+                         background='SeaGreen2',
+                         foreground='green4')
+        styler.configure("Snow.TFrame",
+                         background='snow2')
         # Inheriting from Storage for program logic
         self.logic = Storage()
         # Set General layout
-        self.content = ttk.Frame(master=self, padding=(3, 3, 3, 3))
-        self.mainframe = ttk.Frame(self.content, relief='sunken')
+        self.content = ttk.Frame(master=self,
+                                 padding=(3, 3, 3, 3),
+                                 style='Snow.TFrame')
+        self.mainframe = ttk.Frame(self.content,
+                                   relief='flat')
         self.content.grid()
         self.mainframe.grid()
         self.label_text = StringVar()
@@ -31,8 +44,8 @@ class GUI(Tk):
         ''' Create the display '''
         display_frame = ttk.Frame(self.mainframe, relief='flat')
         display_frame['borderwidth'] = 10
-        display_label = ttk.Label(display_frame)
-        display_label['textvariable'] = self.label_text
+        display_label = ttk.Label(display_frame,
+                                  textvariable=self.label_text)
         # grid above widgets
         display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
         display_label.grid(row=0, column=0, columnspan=4)
@@ -77,15 +90,16 @@ class GUI(Tk):
         one = ttk.Button(keypad, text='1',
                          command=lambda: self._button_invoke('1'))
         plusMinus = ttk.Button(keypad, text='+/-',
-                               command=lambda: self._button_invoke('P/M'))
+                               command=lambda: self._button_invoke('i'))
         # row 5
         dot = ttk.Button(keypad, text='.',
                          command=lambda: self._button_invoke('.'))
         zero = ttk.Button(keypad, text='0',
                           command=lambda: self._button_invoke('0'))
         copy = ttk.Button(keypad, text='Copy',
-                          command=lambda: self._button_invoke('Copy'))
+                          command=lambda: self._button_invoke('c'))
         equal = ttk.Button(keypad, text='=',
+                           style='GreenButton.TButton',
                            command=lambda: self._button_invoke('='))
         buttons = {mul: (1, 0),
                    div: (1, 1),
@@ -116,10 +130,10 @@ class GUI(Tk):
         if bt is '=':
             ''' If button pressed is '=' '''
             to_display = 'Ans: '+self.logic.show_answer()
-            self.label_text.set(to_display[-12:])
+            self.label_text.set(to_display[-17:])
         elif bt is 'Copy':
             self.logic.copy_to_clipboard()
         else:
             self.logic.into_storage(bt)
             to_display = self.logic.show_storage()
-            self.label_text.set(to_display[-12:])
+            self.label_text.set(to_display[-17:])
