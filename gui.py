@@ -127,13 +127,24 @@ class GUI(Tk):
             bt.grid(row=pos[0], column=pos[1])
 
     def _button_invoke(self, bt):
+
         if bt is '=':
             ''' If button pressed is '=' '''
             to_display = 'Ans: '+self.logic.show_answer()
-            self.label_text.set(to_display[-17:])
+            if(len(to_display)>17):
+                ttk.Style().configure("TLabel",font='Times '+str(20*17//len(to_display)))
+            else:
+                ttk.Style().configure("TLabel",font='Times 20')
+            self.label_text.set(to_display)
         elif bt is 'Copy':
             self.logic.copy_to_clipboard()
         else:
             self.logic.into_storage(bt)
             to_display = self.logic.show_storage()
-            self.label_text.set(to_display[-17:])
+            if(len(to_display)>17):
+                ttk.Style().configure("TLabel",font='Times '+str(20*17//len(to_display)))
+            else:
+                ttk.Style().configure("TLabel",
+                         font='Times 20')
+            self.label_text.set(to_display)
+                
