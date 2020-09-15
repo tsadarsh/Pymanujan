@@ -19,7 +19,7 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 #### Contribution :nerd_face:
 All are welcome :pray: to contribute to this project. Start from going through the ```source.py``` which has good amount comments and documentation along the code. Currently the focus is on improving the GUI. Create an *Issue* and start a discussion before working on a seperate *Fork*, collabaration always results in better ideas!
 
-Goal :soccer: towards your contribution should always to be able to improve your expertise on Python :snake:.
+Goal :soccer: towards your contribution should always be to improve expertise on Python :snake:.
 > Though a calculator app is no path-breaking project to work on, it gives confidence to a new-devloper the abilty to build something from scratch.
 
 #### Note for Linux users:
