@@ -5,7 +5,7 @@ Whole code is written in pure Python :snake:. Moreover, as a beginner myself, ne
 
 Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy_minus_sign:', 'Multiplication :heavy_multiplication_x:' and 'Division :heavy_division_sign:'. Check **Tasks List** issues pending on *feature-requests*. Check **Contribution** for more details to get started on developing the program.
 
-#### User interface of PyCalc *v0.1-beta* :desktop_computer:
+#### User interface of PyCalc *v0.1* :desktop_computer:
 
 ![As of v1.1](https://github.com/maddypie/PyCalc/blob/master/PyCalc-v1.0.png)
 
@@ -24,4 +24,9 @@ Goal :soccer: towards your contribution should always be to improve expertise on
 
 #### Note for Linux users:
 For 'Copy' button to work as intended, make sure ```xclip``` is installed.
-> sudo apt install xclip
+Distribution | Installation command
+-------------|---------------------
+Debian | `sudo apt install xclip`
+Fedora based distro | `dnf install xclip`
+CentOS based distro | `yum install xclip`
+OpenSUSE based distro | `zypper install xclip`
