@@ -13,6 +13,11 @@ class GUI(Tk):
         self.title("PyCalc (v1.0)")
         self.resizable(False, False)
         styler = ttk.Style()
+        self._layout = {'*': '*', '/': '/', 'C': 'C', 'AC': 'AC',
+                        '9': '9', '8': '8', '7': '7', '-': '-',
+                        '6': '6', '5': '5', '4': '4', '+': '+',
+                        '3': '3', '2': '2', '1': '1', '+/-': 'i',
+                        '.': '.', '0': '0', 'Copy': 'c', '=': '='}
         styler.configure("TLabel",
                          font='Times 20')
         styler.configure("TButton",
@@ -37,10 +42,8 @@ class GUI(Tk):
         self.content.grid()
         self.mainframe.grid()
         self.label_text = StringVar()
-        # Create display
-        self._create_display()
 
-    def _create_display(self):
+    def create_display(self):
         ''' Create the display '''
         display_frame = ttk.Frame(self.mainframe, relief='flat')
         display_frame['borderwidth'] = 10
@@ -49,20 +52,13 @@ class GUI(Tk):
         # grid above widgets
         display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
         display_label.grid(row=0, column=0, columnspan=4)
-        # Create buttons
-        self._create_buttons(self.mainframe)
 
-    def _create_buttons(self, mainframe):
+    def create_buttons(self):
         ''' Create buttons under keypad '''
-        _layout = {'*': '*', '/': '/', 'C': 'C', 'AC': 'AC',
-                   '9': '9', '8': '8', '7': '7', '-': '-',
-                   '6': '6', '5': '5', '4': '4', '+': '+',
-                   '3': '3', '2': '2', '1': '1', '+/-': 'i',
-                   '.': '.', '0': '0', 'Copy': 'c', '=': '='}
-        keypad = ttk.Frame(mainframe)
+        keypad = ttk.Frame(self.mainframe)
         button_objects = {button: ttk.Button(keypad, text=button,
-            command=lambda button=_layout[button]: self._button_invoke(button))
-            for button in _layout}
+            command=lambda button=self._layout[button]: self._button_invoke(button))
+            for button in self._layout}
         button_objects['=']['style'] = 'GreenButton.TButton'
 
         keypad.grid()
@@ -92,3 +88,16 @@ class GUI(Tk):
             else:
                 ttk.Style().configure("TLabel", font='Times 20')
             self.label_text.set(to_display)
+
+    def keyboard_event_binding(self):
+        self.bind("<Key>", self._callback)
+
+    def _callback(self, e):
+        if e.char.lower() in self._layout.values():
+            self._button_invoke(e.char)
+        elif e.char is '\r':
+            self._button_invoke('=')
+        elif e.char.lower() in ('\x08', 'b'):
+            self._button_invoke('C')
+        elif e.char.lower() is 'q':
+            self.destroy()  # not working yet
