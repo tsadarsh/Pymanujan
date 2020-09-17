@@ -12,25 +12,13 @@ class GUI(Tk):
         # Main window properties
         self.title("PyCalc (v1.0)")
         self.resizable(False, False)
-        styler = ttk.Style()
+        self.styler = ttk.Style()
         self._layout = {'*': '*', '/': '/', 'C': 'C', 'AC': 'AC',
                         '9': '9', '8': '8', '7': '7', '-': '-',
                         '6': '6', '5': '5', '4': '4', '+': '+',
                         '3': '3', '2': '2', '1': '1', '+/-': 'i',
                         '.': '.', '0': '0', 'Copy': 'c', '=': '='}
-        styler.configure("TLabel",
-                         font='Times 20')
-        styler.configure("TButton",
-                         relief='flat',
-                         width='5',
-                         padding='10',
-                         background='bisque')
-        styler.configure("GreenButton.TButton",
-                         relief='falt',
-                         background='SeaGreen2',
-                         foreground='green4')
-        styler.configure("Snow.TFrame",
-                         background='snow2')
+
         # Inheriting from Storage for program logic
         self.logic = Storage()
         # Set General layout
@@ -43,6 +31,20 @@ class GUI(Tk):
         self.mainframe.grid()
         self.label_text = StringVar()
 
+    def style_settings(self):
+        self.styler.configure("TLabel",
+                         font='Times 20')
+        self.styler.configure("TButton",
+                         relief='flat',
+                         width='5',
+                         padding='10',
+                         background='bisque')
+        self.styler.configure("GreenButton.TButton",
+                         relief='falt',
+                         background='SeaGreen2',
+                         foreground='green4')
+        self.styler.configure("Snow.TFrame",
+                         background='snow2')
     def create_display(self):
         ''' Create the display '''
         display_frame = ttk.Frame(self.mainframe, relief='flat')
