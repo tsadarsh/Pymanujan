@@ -97,9 +97,9 @@ class GUI(Tk):
     def _callback(self, e):
         if e.char.lower() in self._layout.values():
             self._button_invoke(e.char)
-        elif e.char is '\r':
+        elif e.char == '\r':
             self._button_invoke('=')
         elif e.char.lower() in ('\x08', 'b'):
             self._button_invoke('C')
-        elif e.char.lower() is 'q':
-            self.destroy()  # not working yet
+        elif e.char.lower() == 'q':
+            self.destroy()
