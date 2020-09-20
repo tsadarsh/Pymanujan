@@ -33,18 +33,18 @@ class GUI(Tk):
 
     def default_style_settings(self):
         self.styler.configure("TLabel",
-                         font='Times 20')
+                               font='Times 20')
         self.styler.configure("TButton",
-                         relief='flat',
-                         width='5',
-                         padding='10',
-                         background='bisque')
+                              relief='flat',
+                              width='5',
+                              padding='10',
+                              background='bisque')
         self.styler.configure("EqualButton.TButton",
-                         relief='falt',
-                         background='SeaGreen2',
-                         foreground='green4')
+                              relief='falt',
+                              background='SeaGreen2',
+                              foreground='green4')
         self.styler.configure("Outliner.TFrame",
-                         background='snow2')
+                              background='snow2')
 
     def create_simple_display(self):
         ''' Create the display '''
