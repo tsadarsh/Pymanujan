@@ -1,37 +1,32 @@
-## Welcome to GitHub Pages
+# PyCalc :sparkles:
+### Python powered Calculator. As simple as that.
+#### Introduction
+Whole code is written in pure Python :snake:. Moreover, as a beginner myself, new developers and contribtors can easily go through the code to understand the logic behind the program. I tried to include as much as comments and documentations within the code itself. Feel free to ping me for any updates. This program has a lot of scope for improvement :sparkles:. Development best-suited for new developers and programmers, this simple program provides a stage for immense develpoment of one's skill, expertise and familiarity of Python programming language :snake:.
 
-You can use the [editor on GitHub](https://github.com/maddypie/PyCalc/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy_minus_sign:', 'Multiplication :heavy_multiplication_x:' and 'Division :heavy_division_sign:'. Check **Tasks List** issues pending on *feature-requests*. Check **Contribution** for more details to get started on developing the program.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+#### User interface of PyCalc *v0.1* :desktop_computer:
 
-### Markdown
+![As of v1.1](https://github.com/maddypie/PyCalc/blob/master/PyCalc-v1.0.png)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+#### Tasks List :writing_hand:
+- [x] **Refactor ~~source.py~~ source code.**
+- [x] Add 'Copy' functionality, to copy the result. Currently 'Copy' button does not do anything.
+- [x] Dynamic font size in result label.
+- [x] Bind 'Number-pad' keys to enter input.
+- [ ] Option to switch between 'Simple' to 'Advanced' mode. Advanced mode should have more funtionalities.
 
-```markdown
-Syntax highlighted code block
+#### Contribution :nerd_face:
+All are welcome :pray: to contribute to this project. Start from going through the ```source.py``` which has good amount comments and documentation along the code. Currently the focus is on improving the GUI. Create an *Issue* and start a discussion before working on a seperate *Fork*, collabaration always results in better ideas!
 
-# Header 1
-## Header 2
-### Header 3
+Goal :soccer: towards your contribution should always be to improve expertise on Python :snake:.
+> Though a calculator app is no path-breaking project to work on, it gives confidence to a new-devloper the abilty to build something from scratch.
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/maddypie/PyCalc/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+#### Note for Linux users:
+For 'Copy' button to work as intended, make sure ```xclip``` is installed.
+Distribution | Installation command
+-------------|---------------------
+Debian | `sudo apt install xclip`
+Fedora based distro | `dnf install xclip`
+CentOS based distro | `yum install xclip`
+OpenSUSE based distro | `zypper install xclip`
