@@ -24,14 +24,14 @@ class GUI(Tk):
         # Set General layout
         self.content = ttk.Frame(master=self,
                                  padding=(3, 3, 3, 3),
-                                 style='Snow.TFrame')
+                                 style='Outliner.TFrame')
         self.mainframe = ttk.Frame(self.content,
                                    relief='flat')
         self.content.grid()
         self.mainframe.grid()
         self.label_text = StringVar()
 
-    def style_settings(self):
+    def default_style_settings(self):
         self.styler.configure("TLabel",
                          font='Times 20')
         self.styler.configure("TButton",
@@ -39,13 +39,14 @@ class GUI(Tk):
                          width='5',
                          padding='10',
                          background='bisque')
-        self.styler.configure("GreenButton.TButton",
+        self.styler.configure("EqualButton.TButton",
                          relief='falt',
                          background='SeaGreen2',
                          foreground='green4')
-        self.styler.configure("Snow.TFrame",
+        self.styler.configure("Outliner.TFrame",
                          background='snow2')
-    def create_display(self):
+
+    def create_simple_display(self):
         ''' Create the display '''
         display_frame = ttk.Frame(self.mainframe, relief='flat')
         display_frame['borderwidth'] = 10
@@ -55,13 +56,13 @@ class GUI(Tk):
         display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
         display_label.grid(row=0, column=0, columnspan=4)
 
-    def create_buttons(self):
+    def create_simple_buttons(self):
         ''' Create buttons under keypad '''
         keypad = ttk.Frame(self.mainframe)
         button_objects = {button: ttk.Button(keypad, text=button,
             command=lambda button=self._layout[button]: self._button_invoke(button))
             for button in self._layout}
-        button_objects['=']['style'] = 'GreenButton.TButton'
+        button_objects['=']['style'] = 'EqualButton.TButton'
 
         keypad.grid()
         row, column = 0, 0
@@ -71,7 +72,6 @@ class GUI(Tk):
             column += 1
 
     def _button_invoke(self, bt):
-
         if bt is '=':
             ''' If button pressed is '=' '''
             to_display = 'Ans: '+self.logic.show_answer()
