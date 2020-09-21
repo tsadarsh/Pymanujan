@@ -1,3 +1,5 @@
+import logging
+
 class Calculate():
     ans: str
     _get_value = {
@@ -30,6 +32,9 @@ class Calculate():
     def __partial_calculate(self, index) -> None:
         operator = self.expr_as_list[index]
         left_operand = float(self.expr_as_list[index-1])
-        right_operand = float(self.expr_as_list[index+1])
-        sub_result = self._get_value[operator](left_operand, right_operand)
-        self.expr_as_list[index-1:index+2] = [str(sub_result)]
+        try:
+            right_operand = float(self.expr_as_list[index+1])
+            sub_result = self._get_value[operator](left_operand, right_operand)
+            self.expr_as_list[index-1:index+2] = [str(sub_result)]
+        except IndexError:
+            self.expr_as_list[index-1:index+2] = [str(left_operand)]
