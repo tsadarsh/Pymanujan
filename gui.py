@@ -33,7 +33,7 @@ class GUI(Tk):
 
     def default_style_settings(self):
         self.styler.configure("TLabel",
-                               font='Times 20')
+                              font='Times 20')
         self.styler.configure("TButton",
                               relief='flat',
                               width='5',
