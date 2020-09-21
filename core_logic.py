@@ -1,6 +1,24 @@
-import logging
-
 class Calculate():
+    """Class to compute final asnwer from list of operands and operators
+
+    This class calulates final answer from list of operands and operators by
+    slicing expr_as_list to partial expression containing a left-operand, an
+    operator and a right-operand one at a time. This process continues untill
+    expr_as_list contains no element present in 'operators'.
+
+    Attributes
+    ----------
+    expr_as_list: list
+        a list of operators and operands as strings
+    operators: list
+        a list of valid operators as strings
+
+    Methods
+    -------
+    calculate(expr_as_list: list, operators: list)
+        Loops through expr_as_list until all operators are popped.
+    """
+
     ans: str
     _get_value = {
             '/': lambda x, y: x/y,
@@ -9,11 +27,20 @@ class Calculate():
             '-': lambda x, y: x-y
             }
 
-    def __init__(self, expr_as_list, operators):
+    def __init__(self, expr_as_list: list, operators: list):
         self.expr_as_list = expr_as_list
         self.operators = operators
 
     def calculate(self) -> str:
+        """Loops throigh expr_as_list until all operators are popped.
+
+        Operators are popped in the following order: '/', '*', '+', '-'. While
+        loop checks the presence of operators and calls __partial_calculate if
+        found. After passing all the while loops it is assumed expr_as_list has
+        no more operators. Only one element(answer) remains in expr_as_list,
+        expr_as_list[0] is returned.
+        """
+
         while self.operators[0] in self.expr_as_list:
             index = self.expr_as_list.index(self.operators[0])
             self.__partial_calculate(index)
@@ -29,7 +56,25 @@ class Calculate():
         self.ans = self.expr_as_list[0]
         return self.ans
 
-    def __partial_calculate(self, index) -> None:
+    def __partial_calculate(self, index: int) -> None:
+        """Computes single chunk of expression from provided operator index
+
+        From given operator index, left and right operand index assumes index-1
+        and index+1 values. Chunk now constitutes left-operand, operator and
+        right-operand. _get_value dictionary returns calulated chunk value from
+        operator passed as key.
+
+        Parameters
+        ----------
+        index: int
+            Index value of operator
+
+        Raises
+        ------
+        IndexError
+            If there is no operand next to operator
+        """
+
         operator = self.expr_as_list[index]
         left_operand = float(self.expr_as_list[index-1])
         try:
