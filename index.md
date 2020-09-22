@@ -7,7 +7,7 @@ Currently the program supports 'Addition', 'Subtraction', 'Multiplication' and '
 
 #### User interface of PyCalc *v0.1*
 
-![As of v1.1](https://github.com/maddypie/PyCalc/blob/master/PyCalc-v1.0.png)
+![As of v1.0](https://raw.githubusercontent.com/maddypie/PyCalc/master/PyCalc-v1.0.png)
 
 #### Tasks List
 - [x] Refactor ~~source.py~~ source code.
