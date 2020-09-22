@@ -1,9 +1,8 @@
-from core_logic import Calculate
-from pyperclip import copy as to_clipboard
 from operator import neg
 
 
 class Storage:
+    """Class to store and retrieve inputs provided as strings"""
     __operators: list = ['/', '*', '+', '-']
     __special: list = ['C', 'AC', 'i']
     __storage: list
@@ -11,17 +10,6 @@ class Storage:
 
     def __init__(self):
         self.__storage = []
-
-    def copy_to_clipboard(self):
-        to_clipboard("".join(self.__storage))
-
-    def show_answer(self):
-        self.go_for_calc()
-        return self.__answer
-
-    def go_for_calc(self):
-        obj = Calculate(self.__storage, self.__operators.copy())
-        self.__answer = obj.calculate()
 
     def show_storage(self) -> str:
         this = ''.join(
