@@ -28,6 +28,15 @@ class Calculate():
             }
 
     def __init__(self, expr_as_list: list, operators: list):
+        """
+        Attributes
+        ----------
+        expr_as_list: list
+            a list of operators and operands as strings
+        operators: list
+            a list of valid operators as strings
+        """
+
         self.expr_as_list = expr_as_list
         self.operators = operators
 
