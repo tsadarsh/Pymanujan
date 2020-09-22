@@ -1,10 +1,16 @@
 from tkinter import Tk
 from tkinter import ttk
 from tkinter import StringVar
+
+from pyperclip import copy as to_clipboard
+
 from storage import Storage
+from core_logic import Calculate
 
 
 class GUI(Tk):
+
+    __operators: list = ['/', '*', '+', '-']
 
     def __init__(self):
         ''' View initializer '''
@@ -74,14 +80,15 @@ class GUI(Tk):
     def _button_invoke(self, bt):
         if bt is '=':
             ''' If button pressed is '=' '''
-            to_display = 'Ans: '+self.logic.show_answer()
+            to_display = 'Ans: '+self._get_answer(self.logic.show_storage_as_list(),
+                                                  self.__operators)
             if(len(to_display) > 17):
                 ttk.Style().configure("TLabel", font='Times '+str(20*17//len(to_display)))
             else:
                 ttk.Style().configure("TLabel", font='Times 20')
             self.label_text.set(to_display)
         elif bt is 'c':
-            self.logic.copy_to_clipboard()
+            self._copy_to_clipboard(self.logic.show_storage_as_list())
         else:
             self.logic.into_storage(bt)
             to_display = self.logic.show_storage()
@@ -103,3 +110,10 @@ class GUI(Tk):
             self._button_invoke('C')
         elif e.char.lower() == 'q':
             self.destroy()
+
+    def _get_answer(self, inputs_as_list, operators):
+        calculate_instance = Calculate(inputs_as_list, operators)
+        return calculate_instance.calculate()
+
+    def _copy_to_clipboard(self, inputs_as_list):
+        to_clipboard("".join(inputs_as_list))
