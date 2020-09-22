@@ -5,7 +5,7 @@ Whole code is written in pure Python. Moreover, as a beginner myself, new develo
 
 Currently the program supports 'Addition', 'Subtraction', 'Multiplication' and 'Division'. Check Tasks List issues pending on *feature-requests*. Check Contribution for more details to get started on developing the program.
 
-#### User interface of PyCalc *v0.1*
+#### User interface of PyCalc *v1.0*
 
 ![As of v1.0](https://raw.githubusercontent.com/maddypie/PyCalc/master/PyCalc-v1.0.png)
 
