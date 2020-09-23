@@ -2,7 +2,18 @@ from operator import neg
 
 
 class Storage:
-    """Class to store and retrieve inputs provided as strings"""
+    """Class to store and retrieve inputs provided as strings
+
+    Methods
+    -------
+    show_storage: str
+        Returns stored characters as a single formatted string
+    show_storage_as_list: list
+        Returns stored characters as a list
+    into_storage: None
+        Stores argument `character` if logic is met
+    """
+
     __operators: list = ['/', '*', '+', '-']
     __special: list = ['C', 'AC', 'i']
     __storage: list
@@ -12,6 +23,12 @@ class Storage:
         self.__storage = []
 
     def show_storage(self) -> str:
+        """Returns stored characters as a single formatted string.
+
+        Elements from a list containing stored characters are combined to a
+        single string with whitespace around operators.
+        """
+
         this = ''.join(
                        map(
                            lambda i: ' '+i+' ' if i in self.__operators else i,
@@ -20,10 +37,25 @@ class Storage:
         return this
 
     def show_storage_as_list(self) -> list:
+        """Returns stored characters as a list"""
+
         return self.__storage
 
-    def into_storage(self, character) -> None:
-        ''' Logic to add input to storage '''
+    def into_storage(self, character: str) -> None:
+        """Stores argument `character` if logic is met.
+
+        Logic checks if `character` is operator, special or dot and applies
+        necessary operations internally. Private-method(p.m) `put_operator`
+        is called if logic identifies `character` as an operator. Similarly,
+        p.m `apply_special`, `put_dot` and `put_digit` is called when logic
+        identifies a special, dot and digit char respectively.
+
+        Arguments
+        ---------
+        character : str
+            Character to be stored
+        """
+
         if character in self.__operators:
             return self.__put_operator(character)
         if character in self.__special:
@@ -34,20 +66,34 @@ class Storage:
             raise ValueError
         return self.__put_digit(character)
 
-    def __put_operator(self, operator) -> None:
-        if len(self.__storage) > 0:
+    def __put_operator(self, character) -> None:
+        """Logic for characters of type operator before storing
+
+        In case storage is empty, if operator is addive, `0` followed by the
+        operator is stored. If operator is multiplicative, `1` followed by the
+        operator is stored.
+        If the last element in storage is already an operator, it is replaced.
+        In all other cases operator is appended to storage.
+
+        Arguments
+        ---------
+        operator : str
+            Character should be of type operator
+        """
+
+        if len(self.__storage) == 0:
+            ''' First entry to __storage '''
+            self.__storage.extend([['1', '0']
+                                  [self.__operators.index(character)//2],
+                                   character])
+        else:
             ''' Not first input '''
             if self.__storage[-1] in self.__operators:
                 ''' Changing 3+- to 3- '''
-                self.__storage[-1] = operator
+                self.__storage[-1] = character
             else:
                 ''' DEFAULT: Adding operator '''
-                self.__storage.append(operator)
-        else:
-            ''' First entry to __storage '''
-            self.__storage.extend([['1', '0']
-                                  [self.__operators.index(operator)//2],
-                                   operator])
+                self.__storage.append(character)
 
     def __apply_special(self, special) -> None:
         if special == 'AC':
