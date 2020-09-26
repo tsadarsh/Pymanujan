@@ -82,38 +82,64 @@ class Storage:
         """
 
         if len(self.__storage) == 0:
-            ''' First entry to __storage '''
             self.__storage.extend([['1', '0']
                                   [self.__operators.index(character)//2],
                                    character])
         else:
-            ''' Not first input '''
             if self.__storage[-1] in self.__operators:
-                ''' Changing 3+- to 3- '''
                 self.__storage[-1] = character
             else:
-                ''' DEFAULT: Adding operator '''
                 self.__storage.append(character)
 
-    def __apply_special(self, special) -> None:
-        if special == 'AC':
+    def __apply_special(self, character) -> None:
+        """Operations for characters of type special
+
+        If special character is `AC` storage is cleared. `C` removes the last
+        stored character. `i` performs multiplicative inverse on last character
+        provided it is not an operator.
+
+        Arguments
+        ---------
+        character : str
+            Character should be either `AC`, `C` or `i`.
+        """
+
+        if len(self.__storage) == 0:
+            return
+        elif character == 'AC':
             self.__storage.clear()
-        if special == 'C':
+        elif character == 'C':
             self.__storage.pop(-1)
-        if special == 'i':
-            ''' Multiplicative inverse of last number chunk.
-            Diabled when last input is operator '''
+        elif character == 'i':
             self.__storage[-1] = str(neg(float(self.__storage[-1])))
 
-    def __put_digit(self, digit) -> None:
-        if len(self.__storage) == 0 or self.__storage[-1] in self.__operators:
-            ''' First entry or previous chunk is operator '''
-            self.__storage.append(digit)
-        else:
-            ''' Appending continuing digits '''
-            self.__storage[-1] += digit
+    def __put_digit(self, character) -> None:
+        """Stores chracter of type digit
 
-    def __put_dot(self, dot):
+        If previous entry to storage is a charater of type digit the new
+        character is appeded. Otherwise, new character is added as a new entry.
+        For example if previous entry is `9` and latest entry is `8`, previous
+        entry is modified to `98` and stored.
+
+        Arguments
+        ---------
+        character : str
+            Character must be of the type digit
+        """
+
+        if len(self.__storage) == 0 or self.__storage[-1] in self.__operators:
+            self.__storage.append(character)
+        else:
+            self.__storage[-1] += character
+
+    def __put_dot(self, dot='.'):
+        """Logic for storing dot character.
+
+        If dot is first entry, `0.` is stored. Otherwise dot is appended to
+        previous entry, provided it is a digit. If dot already in previous
+        entry latest dot is ignored.
+        """
+
         if len(self.__storage) == 0:
             self.__storage.append("0.")
             return
