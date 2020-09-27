@@ -28,13 +28,15 @@ class GUI(Tk):
         # Inheriting from Storage for program logic
         self.logic = Storage()
         # Set General layout
-        self.content = ttk.Frame(master=self,
-                                 padding=(3, 3, 3, 3),
-                                 style='Outliner.TFrame')
+        self.content = ttk.Notebook(master=self,
+                                    padding=(0, 0, 0, 0),
+                                    style='Outliner.TFrame')
         self.mainframe = ttk.Frame(self.content,
                                    relief='flat')
+        self.mainframe2 = ttk.Frame(self.content)
+        self.content.add(self.mainframe, text='Basic')
+        self.content.add(self.mainframe2, text='Advanced')
         self.content.grid()
-        self.mainframe.grid()
         self.label_text = StringVar()
 
     def default_style_settings(self):
@@ -49,10 +51,14 @@ class GUI(Tk):
                               relief='falt',
                               background='SeaGreen2',
                               foreground='green4')
+        self.styler.configure("EqualButton2.TButton",
+                              relief='falt',
+                              background='firebrick1',
+                              foreground='green4')
         self.styler.configure("Outliner.TFrame",
                               background='snow2')
 
-    def create_simple_display(self):
+    def create_basic_display(self):
         ''' Create the display '''
         display_frame = ttk.Frame(self.mainframe, relief='flat')
         display_frame['borderwidth'] = 10
@@ -62,7 +68,7 @@ class GUI(Tk):
         display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
         display_label.grid(row=0, column=0, columnspan=4)
 
-    def create_simple_buttons(self):
+    def create_basic_buttons(self):
         ''' Create buttons under keypad '''
         keypad = ttk.Frame(self.mainframe)
         button_objects = {
@@ -78,6 +84,29 @@ class GUI(Tk):
         button_objects['AC']['command'] = lambda: self._button_invoke('A')
         button_objects['+/-']['command'] = lambda: self._button_invoke('i')
         button_objects['=']['style'] = 'EqualButton.TButton'
+
+        keypad.grid()
+        row, column = 0, 0
+        for button in button_objects.values():
+            button.grid(row=(row//4)+1, column=column % 4)
+            row += 1
+            column += 1
+
+    def create_advanced_display(self):
+        display_frame = ttk.Frame(self.mainframe2, relief='flat')
+        display_frame['borderwidth'] = 10
+        display_label = ttk.Label(display_frame,
+                                  textvariable=self.label_text)
+        # grid above widgets
+        display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
+        display_label.grid(row=0, column=0, columnspan=4)
+
+    def create_advanced_buttons(self):
+        keypad = ttk.Frame(self.mainframe2)
+        button_objects = {button: ttk.Button(keypad, text=button,
+            command=lambda button=self._layout[button]: self._button_invoke(button))
+            for button in self._layout}
+        button_objects['=']['style'] = 'EqualButton2.TButton'
 
         keypad.grid()
         row, column = 0, 0
