@@ -50,6 +50,18 @@ class Calculate():
         expr_as_list[0] is returned.
         """
 
+        if '(' in self.expr_as_list:
+            print('recieved==', self.expr_as_list)
+            expression = self.expr_as_list.copy()
+            left_p = expression.index('(')
+            right_p = expression.index(')') #multiple parenthesis problem
+            expression = expression[left_p+1:right_p]
+            print('sending==', expression)
+
+            new_instance = Calculate(expression, self.operators)
+            self.expr_as_list[left_p:right_p+1] = [new_instance.calculate()]
+            print('after parenthesis==', self.expr_as_list)
+
         while self.operators[0] in self.expr_as_list:
             index = self.expr_as_list.index(self.operators[0])
             self.__partial_calculate(index)
