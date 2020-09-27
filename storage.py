@@ -15,7 +15,7 @@ class Storage:
     """
 
     __operators: list = ['/', '*', '+', '-']
-    __special: list = ['C', 'AC', 'i']
+    __special: list = ['C', 'A', 'i']
     __storage: list
     __result: str
 
@@ -106,7 +106,7 @@ class Storage:
 
         if len(self.__storage) == 0:
             return
-        elif character == 'AC':
+        elif character == 'A':
             self.__storage.clear()
         elif character == 'C':
             self.__storage.pop(-1)
