@@ -19,11 +19,11 @@ class GUI(Tk):
         self.title("PyCalc (v1.1)")
         self.resizable(False, False)
         self.styler = ttk.Style()
-        self._layout = {'*': '*', '/': '/', 'C': 'C', 'AC': 'AC',
-                        '9': '9', '8': '8', '7': '7', '-': '-',
-                        '6': '6', '5': '5', '4': '4', '+': '+',
-                        '3': '3', '2': '2', '1': '1', '+/-': 'i',
-                        '.': '.', '0': '0', 'Copy': 'c', '=': '='}
+        self._layout = ['*', '/', 'C', 'AC',
+                        '9', '8', '7', '-',
+                        '6', '5', '4', '+',
+                        '3', '2', '1', '+/-',
+                        '.', '0', 'Copy', '=']
 
         # Inheriting from Storage for program logic
         self.logic = Storage()
@@ -65,9 +65,18 @@ class GUI(Tk):
     def create_simple_buttons(self):
         ''' Create buttons under keypad '''
         keypad = ttk.Frame(self.mainframe)
-        button_objects = {button: ttk.Button(keypad, text=button,
-            command=lambda button=self._layout[button]: self._button_invoke(button))
-            for button in self._layout}
+        button_objects = {
+                button: ttk.Button(
+                        master=keypad,
+                        text=button,
+                        command=lambda button=button: self._button_invoke(
+                                button
+                                )
+                        )
+                for button in self._layout
+                }
+        button_objects['AC']['command'] = lambda: self._button_invoke('A')
+        button_objects['+/-']['command'] = lambda: self._button_invoke('i')
         button_objects['=']['style'] = 'EqualButton.TButton'
 
         keypad.grid()
@@ -80,20 +89,23 @@ class GUI(Tk):
     def _button_invoke(self, bt):
         if bt is '=':
             ''' If button pressed is '=' '''
-            to_display = 'Ans: '+self._get_answer(self.logic.show_storage_as_list(),
-                                                  self.__operators)
+            to_display = 'Ans: '+self._get_answer(
+                    self.logic.show_storage_as_list(), self.__operators
+                    )
             if(len(to_display) > 17):
-                ttk.Style().configure("TLabel", font='Times '+str(20*17//len(to_display)))
+                FONT = 'Times '+str(20*17//len(to_display))
+                ttk.Style().configure("TLabel", font=FONT)
             else:
                 ttk.Style().configure("TLabel", font='Times 20')
             self.label_text.set(to_display)
-        elif bt is 'c':
+        elif bt is 'Copy':
             self._copy_to_clipboard(self.logic.show_storage_as_list())
         else:
             self.logic.into_storage(bt)
             to_display = self.logic.show_storage()
             if(len(to_display) > 17):
-                ttk.Style().configure("TLabel", font='Times '+str(20*17//len(to_display)))
+                FONT = 'Times '+str(20*17//len(to_display))
+                ttk.Style().configure("TLabel", font=FONT)
             else:
                 ttk.Style().configure("TLabel", font='Times 20')
             self.label_text.set(to_display)
@@ -102,8 +114,14 @@ class GUI(Tk):
         self.bind("<Key>", self._callback)
 
     def _callback(self, e):
-        if e.char.lower() in self._layout.values():
+        if e.char.lower() in self._layout:
             self._button_invoke(e.char)
+        elif e.char.lower() == 'c':
+            self._button_invoke('Copy')
+        elif e.char.lower() == 'a':
+            self._button_invoke('A')
+        elif e.char.lower() == 'i':
+            self._button_invoke('i')
         elif e.char == '\r':
             self._button_invoke('=')
         elif e.char.lower() in ('\x08', 'b'):
