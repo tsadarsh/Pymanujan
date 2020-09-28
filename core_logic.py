@@ -41,8 +41,10 @@ class Calculate():
         self.operators = operators
 
     def calculate(self) -> str:
-        """Loops throigh expr_as_list until all operators are popped.
+        """Loops through expr_as_list until all operators are popped.
 
+        Elements between parenthesis is sent as a seperate `sub_expression` to
+        a new instance of Calculate.
         Operators are popped in the following order: '/', '*', '+', '-'. While
         loop checks the presence of operators and calls __partial_calculate if
         found. After passing all the while loops it is assumed expr_as_list has
@@ -51,16 +53,18 @@ class Calculate():
         """
 
         if '(' in self.expr_as_list:
-            print('recieved==', self.expr_as_list)
             expression = self.expr_as_list.copy()
             left_p = expression.index('(')
-            right_p = expression.index(')') #multiple parenthesis problem
-            expression = expression[left_p+1:right_p]
-            print('sending==', expression)
-
-            new_instance = Calculate(expression, self.operators)
-            self.expr_as_list[left_p:right_p+1] = [new_instance.calculate()]
-            print('after parenthesis==', self.expr_as_list)
+            if ')' not in self.expr_as_list:
+                self.expr_as_list.pop(left_p)
+            else:
+                right_p = (len(expression)
+                           - list(reversed(expression)).index(')') - 1)
+                sub_expression = expression[left_p+1:right_p]
+                new_instance = Calculate(sub_expression, self.operators)
+                self.expr_as_list[left_p:right_p+1] = [
+                        new_instance.calculate()
+                        ]
 
         while self.operators[0] in self.expr_as_list:
             index = self.expr_as_list.index(self.operators[0])
