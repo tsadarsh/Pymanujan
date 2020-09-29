@@ -128,6 +128,10 @@ class GUI(Tk):
             self._button_invoke('C')
         elif e.char.lower() == 'q':
             self.destroy()
+        elif e.char == '(':
+            self._button_invoke('(')
+        elif e.char == ')':
+            self._button_invoke(')')
 
     def _get_answer(self, inputs_as_list, operators):
         calculate_instance = Calculate(inputs_as_list, operators)
