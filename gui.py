@@ -52,7 +52,7 @@ class GUI(Tk):
                               background='SeaGreen2',
                               foreground='green4')
         self.styler.configure("EqualButton2.TButton",
-                              relief='falt',
+                              relief='flat',
                               background='firebrick1',
                               foreground='green4')
         self.styler.configure("Outliner.TFrame",
@@ -103,9 +103,15 @@ class GUI(Tk):
 
     def create_advanced_buttons(self):
         keypad = ttk.Frame(self.mainframe2)
-        button_objects = {button: ttk.Button(keypad, text=button,
-            command=lambda button=self._layout[button]: self._button_invoke(button))
-            for button in self._layout}
+        button_objects = {
+                button: ttk.Button(
+                        master=keypad,
+                        text=button,
+                        command=lambda button=button: self._button_invoke(
+                                button)
+                        )
+                for button in self._layout
+                }
         button_objects['=']['style'] = 'EqualButton2.TButton'
 
         keypad.grid()
