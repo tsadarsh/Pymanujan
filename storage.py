@@ -62,9 +62,20 @@ class Storage:
             return self.__apply_special(character)
         if character is '.':
             return self.__put_dot(character)
+        if character == '(':
+            return self.__put_left_paren()
+        if character == ')':
+            return self.__put_right_paren()
         if not character.isnumeric() and character != '.':
             raise ValueError
         return self.__put_digit(character)
+
+    def is_not_digit(self, item: str):
+        try:
+            float(item)
+            return False
+        except ValueError:
+            return True
 
     def __put_operator(self, character) -> None:
         """Logic for characters of type operator before storing
@@ -127,7 +138,9 @@ class Storage:
             Character must be of the type digit
         """
 
-        if len(self.__storage) == 0 or self.__storage[-1] in self.__operators:
+        if len(self.__storage) == 0:
+            self.__storage.append(character)
+        elif self.is_not_digit(self.__storage[-1]):
             self.__storage.append(character)
         else:
             self.__storage[-1] += character
@@ -146,3 +159,12 @@ class Storage:
         if ((self.__storage[-1] not in self.__operators) and
            (dot not in self.__storage[-1])):
             self.__storage[-1] += dot
+
+    def __put_left_paren(self):
+        self.__storage.append("(")
+
+    def __put_right_paren(self):
+        left_paren_count = self.__storage.count('(')
+        right_paren_count = self.__storage.count(')')
+        if left_paren_count > right_paren_count:
+            self.__storage.append(')')
