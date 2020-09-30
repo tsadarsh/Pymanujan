@@ -167,6 +167,9 @@ class Storage:
         Parenthesis is always stored independently. For example `(`, `3` is
         allowed while `(3` is not allowed."""
 
+        if self.__storage[-1] not in self.__operators:
+            self.__storage.extend(['*', "("])
+            return
         self.__storage.append("(")
 
     def __put_right_paren(self):
