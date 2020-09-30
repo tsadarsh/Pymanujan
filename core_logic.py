@@ -54,7 +54,6 @@ class Calculate():
 
         while '(' in self.expr_as_list:
             expression = self.__bracket_balencer(self.expr_as_list.copy())
-            print("balenced-->", expression)
             left_p = expression.index('(')
             if ')' not in self.expr_as_list:
                 self.expr_as_list.pop(left_p)
