@@ -52,8 +52,9 @@ class Calculate():
         expr_as_list[0] is returned.
         """
 
-        if '(' in self.expr_as_list:
-            expression = self.expr_as_list.copy()
+        while '(' in self.expr_as_list:
+            expression = self.__bracket_balencer(self.expr_as_list.copy())
+            print("balenced-->", expression)
             left_p = expression.index('(')
             if ')' not in self.expr_as_list:
                 self.expr_as_list.pop(left_p)
@@ -108,3 +109,13 @@ class Calculate():
             self.expr_as_list[index-1:index+2] = [str(sub_result)]
         except IndexError:
             self.expr_as_list[index-1:index+2] = [str(left_operand)]
+
+    def __bracket_balencer(self, expression: list):
+        left_paren_count = expression.count('(')
+        right_paren_count = expression.count(')')
+        right_paren = ')'
+        if left_paren_count > right_paren_count:
+            count_diff = left_paren_count - right_paren_count
+            expression.extend(right_paren * count_diff)
+            return expression
+        return expression
