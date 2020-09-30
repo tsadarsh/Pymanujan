@@ -127,10 +127,11 @@ class Storage:
     def __put_digit(self, character) -> None:
         """Stores chracter of type digit
 
-        If previous entry to storage is a charater of type digit the new
-        character is appeded. Otherwise, new character is added as a new entry.
-        For example if previous entry is `9` and latest entry is `8`, previous
-        entry is modified to `98` and stored.
+        If previous entry to storage is not a digit the new character is
+        appeded. Otherwise, new character is combined with the lat digit. For
+        example if previous entry is `9` and latest entry is `8`, previous
+        entry is modified to `98` and stored. If previous entry is `+` and new
+        entry is `3`, `3` and `+` are stored seperately.
 
         Arguments
         ---------
@@ -161,9 +162,20 @@ class Storage:
             self.__storage[-1] += dot
 
     def __put_left_paren(self):
+        """Appends right parenthesis in storage.
+
+        Parenthesis is always stored independently. For example `(`, `3` is
+        allowed while `(3` is not allowed."""
+
         self.__storage.append("(")
 
     def __put_right_paren(self):
+        """Logic for adding left parenthesis in storage.
+
+        Right parenthesis(R.P) is added to storage only if `count` of left
+        parenthesis is more that the number of R.P in storage.
+        """
+
         left_paren_count = self.__storage.count('(')
         right_paren_count = self.__storage.count(')')
         if left_paren_count > right_paren_count:
