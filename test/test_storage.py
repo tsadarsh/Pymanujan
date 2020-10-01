@@ -67,6 +67,40 @@ class StorageTests(unittest.TestCase):
 
         self.assertEqual(display, '3 / -2.0 + 1')
 
+    def test_parenthesis_working(self):
+        storage_test_instance = Storage()
+        test_case_input = "(3+2)*2"
+        for test_input in test_case_input:
+            storage_test_instance.into_storage(test_input)
+        display = storage_test_instance.show_storage()
+
+        self.assertEqual(display, "(3 + 2) * 2")
+
+        storage_test_instance.into_storage("A")
+        test_case_input = "8*(3+2)/2"
+        for test_input in test_case_input:
+            storage_test_instance.into_storage(test_input)
+        display = storage_test_instance.show_storage()
+
+        self.assertEqual(display, "8 * (3 + 2) / 2")
+
+    def test_right_paren_less_than_left_paren(self):
+        storage_test_instance = Storage()
+        test_case_input = "(3+2))*4"
+        for test_input in test_case_input:
+            storage_test_instance.into_storage(test_input)
+        display = storage_test_instance.show_storage()
+
+        self.assertEqual(display, "(3 + 2) * 4")
+
+    def test_auto_mul_operator_before_left_parenthesis(self):
+        storage_test_instance = Storage()
+        test_case_input = "4(3+1)"
+        for test_input in test_case_input:
+            storage_test_instance.into_storage(test_input)
+        display = storage_test_instance.show_storage()
+
+        self.assertEqual(display, "4 * (3 + 1)")
 
 if __name__ == '__main__':
     unittest.main()
