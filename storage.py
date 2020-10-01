@@ -60,7 +60,7 @@ class Storage:
             return self.__put_operator(character)
         if character in self.__special:
             return self.__apply_special(character)
-        if character is '.':
+        if character == '.':
             return self.__put_dot(character)
         if character == '(':
             return self.__put_left_paren()
@@ -167,10 +167,14 @@ class Storage:
         Parenthesis is always stored independently. For example `(`, `3` is
         allowed while `(3` is not allowed."""
 
-        if self.__storage[-1] not in self.__operators:
-            self.__storage.extend(['*', "("])
+        LEFT_PAREN = "("
+        if len(self.__storage) == 0:
+            self.__storage.append(LEFT_PAREN)
             return
-        self.__storage.append("(")
+        elif self.__storage[-1] not in self.__operators:
+            self.__storage.extend(['*', LEFT_PAREN])
+            return
+        self.__storage.append(LEFT_PAREN)
 
     def __put_right_paren(self):
         """Logic for adding left parenthesis in storage.
