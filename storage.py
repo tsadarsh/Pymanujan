@@ -60,7 +60,7 @@ class Storage:
             return self.__put_operator(character)
         if character in self.__special:
             return self.__apply_special(character)
-        if character is '.':
+        if character == '.':
             return self.__put_dot(character)
         if character == '(':
             return self.__put_left_paren()
