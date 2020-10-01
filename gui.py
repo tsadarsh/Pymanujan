@@ -53,7 +53,6 @@ class GUI(Tk):
                               foreground='green4')
         self.styler.configure("EqualButton2.TButton",
                               relief='flat',
-                              relief='falt',
                               background='firebrick1',
                               foreground='green4')
         self.styler.configure("Outliner.TFrame",
@@ -113,9 +112,6 @@ class GUI(Tk):
                         )
                 for button in self._layout
                 }
-        button_objects = {button: ttk.Button(keypad, text=button,
-            command=lambda button=self._layout[button]: self._button_invoke(button))
-            for button in self._layout}
         button_objects['=']['style'] = 'EqualButton2.TButton'
 
         keypad.grid()
@@ -126,7 +122,7 @@ class GUI(Tk):
             column += 1
 
     def _button_invoke(self, bt):
-        if bt is '=':
+        if bt == '=':
             ''' If button pressed is '=' '''
             to_display = 'Ans: '+self._get_answer(
                     self.logic.show_storage_as_list(), self.__operators
@@ -137,7 +133,7 @@ class GUI(Tk):
             else:
                 ttk.Style().configure("TLabel", font='Times 20')
             self.label_text.set(to_display)
-        elif bt is 'Copy':
+        elif bt == 'Copy':
             self._copy_to_clipboard(self.logic.show_storage_as_list())
         else:
             self.logic.into_storage(bt)
