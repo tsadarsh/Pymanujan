@@ -24,6 +24,12 @@ class GUI(Tk):
                         '6', '5', '4', '+',
                         '3', '2', '1', '+/-',
                         '.', '0', 'Copy', '=']
+        self._adv_layout = ['(', ')', '^', 'C', 'AC',
+                            '*', '/', 'sin', 'cos', 'tan',
+                            '9', '8', '7', '-', 'pi',
+                            '6', '5', '4', '+', 'x!',
+                            '3', '2', '1', '+/-', 'ln',
+                            '.', '0', 'Copy', 'log', '=']
 
         # Inheriting from Storage for program logic
         self.logic = Storage()
@@ -110,14 +116,14 @@ class GUI(Tk):
                         command=lambda button=button: self._button_invoke(
                                 button)
                         )
-                for button in self._layout
+                for button in self._adv_layout
                 }
         button_objects['=']['style'] = 'EqualButton2.TButton'
 
         keypad.grid()
         row, column = 0, 0
         for button in button_objects.values():
-            button.grid(row=(row//4)+1, column=column % 4)
+            button.grid(row=(row//5)+1, column=column % 5)
             row += 1
             column += 1
 
