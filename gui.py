@@ -130,8 +130,8 @@ class GUI(Tk):
         if bt == '=':
             ''' If button pressed is '=' '''
             to_display = 'Ans: '+self._get_answer(
-                    self.logic.show_storage_as_list(), self.__operators
-                    )
+                self.logic.show_storage_as_list()
+                )
             if(len(to_display) > 17):
                 FONT = 'Times '+str(20*17//len(to_display))
                 ttk.Style().configure("TLabel", font=FONT)
@@ -173,8 +173,8 @@ class GUI(Tk):
         elif e.char == ')':
             self._button_invoke(')')
 
-    def _get_answer(self, inputs_as_list, operators):
-        calculate_instance = Calculate(inputs_as_list, operators)
+    def _get_answer(self, inputs_as_list):
+        calculate_instance = Calculate(inputs_as_list)
         return calculate_instance.calculate()
 
     def _copy_to_clipboard(self, inputs_as_list):
