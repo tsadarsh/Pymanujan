@@ -24,12 +24,11 @@ class GUI(Tk):
                         '6', '5', '4', '+',
                         '3', '2', '1', '+/-',
                         '.', '0', 'Copy', '=']
-        self._adv_layout = ['(', ')', '^', 'C', 'AC',
-                            '*', '/', 'sin', 'cos', 'tan',
-                            '9', '8', '7', '-', 'pi',
-                            '6', '5', '4', '+', 'x!',
-                            '3', '2', '1', '+/-', 'ln',
-                            '.', '0', 'Copy', 'log', '=']
+        self._adv_layout = ['(', ')', '^', 'C',
+                            '*', 'sin', 'cos', 'tan',
+                            '/', 'asin', 'acos', 'atan',
+                            '+', 'x!', 'log', 'ln',
+                            '-', '\u03C0', 'e', '=']
 
         # Inheriting from Storage for program logic
         self.logic = Storage()
@@ -123,7 +122,7 @@ class GUI(Tk):
         keypad.grid()
         row, column = 0, 0
         for button in button_objects.values():
-            button.grid(row=(row//5)+1, column=column % 5)
+            button.grid(row=(row//4)+1, column=column % 4)
             row += 1
             column += 1
 
