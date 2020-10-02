@@ -19,12 +19,13 @@ class Calculate():
 
     ans: str
     _get_value = {
+            '^': lambda x, y: x**y,
             '/': lambda x, y: x/y,
             '*': lambda x, y: x*y,
             '+': lambda x, y: x+y,
             '-': lambda x, y: x-y
             }
-    __operators: list = ['^', '/', '*', '+', '-']
+    __operators: list = ['(' ,'^', '/', '*', '+', '-']
 
     def __init__(self, expr_as_list: list):
         """
@@ -48,7 +49,7 @@ class Calculate():
         expr_as_list[0] is returned.
         """
 
-        while '(' in self.expr_as_list:
+        while self.__operators[0] in self.expr_as_list:
             expression = self.__bracket_balencer(self.expr_as_list.copy())
             left_p = expression.index('(')
             if ')' not in self.expr_as_list:
@@ -62,9 +63,6 @@ class Calculate():
                         new_instance.calculate()
                         ]
 
-        while self.__operators[0] in self.expr_as_list:
-            index = self.expr_as_list.index(self.__operators[0])
-            self.__partial_calculate(index)
         while self.__operators[1] in self.expr_as_list:
             index = self.expr_as_list.index(self.__operators[1])
             self.__partial_calculate(index)
@@ -73,6 +71,12 @@ class Calculate():
             self.__partial_calculate(index)
         while self.__operators[3] in self.expr_as_list:
             index = self.expr_as_list.index(self.__operators[3])
+            self.__partial_calculate(index)
+        while self.__operators[4] in self.expr_as_list:
+            index = self.expr_as_list.index(self.__operators[4])
+            self.__partial_calculate(index)
+        while self.__operators[5] in self.expr_as_list:
+            index = self.expr_as_list.index(self.__operators[5])
             self.__partial_calculate(index)
         self.ans = self.expr_as_list[0]
         return self.ans
