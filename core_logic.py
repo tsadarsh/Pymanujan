@@ -10,8 +10,6 @@ class Calculate():
     ----------
     expr_as_list: list
         a list of operators and operands as strings
-    operators: list
-        a list of valid operators as strings
 
     Methods
     -------
@@ -21,24 +19,23 @@ class Calculate():
 
     ans: str
     _get_value = {
+            '^': lambda x, y: x**y,
             '/': lambda x, y: x/y,
             '*': lambda x, y: x*y,
             '+': lambda x, y: x+y,
             '-': lambda x, y: x-y
             }
+    __operators: list = ['(' ,'^', '/', '*', '+', '-']
 
-    def __init__(self, expr_as_list: list, operators: list):
+    def __init__(self, expr_as_list: list):
         """
         Attributes
         ----------
         expr_as_list: list
             a list of operators and operands as strings
-        operators: list
-            a list of valid operators as strings
         """
 
         self.expr_as_list = expr_as_list
-        self.operators = operators
 
     def calculate(self) -> str:
         """Loops through expr_as_list until all operators are popped.
@@ -52,7 +49,7 @@ class Calculate():
         expr_as_list[0] is returned.
         """
 
-        while '(' in self.expr_as_list:
+        while self.__operators[0] in self.expr_as_list:
             expression = self.__bracket_balencer(self.expr_as_list.copy())
             left_p = expression.index('(')
             if ')' not in self.expr_as_list:
@@ -61,22 +58,25 @@ class Calculate():
                 right_p = (len(expression)
                            - list(reversed(expression)).index(')') - 1)
                 sub_expression = expression[left_p+1:right_p]
-                new_instance = Calculate(sub_expression, self.operators)
+                new_instance = Calculate(sub_expression)
                 self.expr_as_list[left_p:right_p+1] = [
                         new_instance.calculate()
                         ]
 
-        while self.operators[0] in self.expr_as_list:
-            index = self.expr_as_list.index(self.operators[0])
+        while self.__operators[1] in self.expr_as_list:
+            index = self.expr_as_list.index(self.__operators[1])
             self.__partial_calculate(index)
-        while self.operators[1] in self.expr_as_list:
-            index = self.expr_as_list.index(self.operators[1])
+        while self.__operators[2] in self.expr_as_list:
+            index = self.expr_as_list.index(self.__operators[2])
             self.__partial_calculate(index)
-        while self.operators[2] in self.expr_as_list:
-            index = self.expr_as_list.index(self.operators[2])
+        while self.__operators[3] in self.expr_as_list:
+            index = self.expr_as_list.index(self.__operators[3])
             self.__partial_calculate(index)
-        while self.operators[3] in self.expr_as_list:
-            index = self.expr_as_list.index(self.operators[3])
+        while self.__operators[4] in self.expr_as_list:
+            index = self.expr_as_list.index(self.__operators[4])
+            self.__partial_calculate(index)
+        while self.__operators[5] in self.expr_as_list:
+            index = self.expr_as_list.index(self.__operators[5])
             self.__partial_calculate(index)
         self.ans = self.expr_as_list[0]
         return self.ans

@@ -24,6 +24,11 @@ class GUI(Tk):
                         '6', '5', '4', '+',
                         '3', '2', '1', '+/-',
                         '.', '0', 'Copy', '=']
+        self._adv_layout = ['(', ')', '^', 'C',
+                            '*', 'sin', 'cos', 'tan',
+                            '/', 'asin', 'acos', 'atan',
+                            '+', 'x!', 'log', 'ln',
+                            '-', '\u03C0', 'e', '=']
 
         # Inheriting from Storage for program logic
         self.logic = Storage()
@@ -110,7 +115,7 @@ class GUI(Tk):
                         command=lambda button=button: self._button_invoke(
                                 button)
                         )
-                for button in self._layout
+                for button in self._adv_layout
                 }
         button_objects['=']['style'] = 'EqualButton2.TButton'
 
@@ -125,8 +130,8 @@ class GUI(Tk):
         if bt == '=':
             ''' If button pressed is '=' '''
             to_display = 'Ans: '+self._get_answer(
-                    self.logic.show_storage_as_list(), self.__operators
-                    )
+                self.logic.show_storage_as_list()
+                )
             if(len(to_display) > 17):
                 FONT = 'Times '+str(20*17//len(to_display))
                 ttk.Style().configure("TLabel", font=FONT)
@@ -168,8 +173,8 @@ class GUI(Tk):
         elif e.char == ')':
             self._button_invoke(')')
 
-    def _get_answer(self, inputs_as_list, operators):
-        calculate_instance = Calculate(inputs_as_list, operators)
+    def _get_answer(self, inputs_as_list):
+        calculate_instance = Calculate(inputs_as_list)
         return calculate_instance.calculate()
 
     def _copy_to_clipboard(self, inputs_as_list):

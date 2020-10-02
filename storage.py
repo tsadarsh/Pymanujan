@@ -14,7 +14,7 @@ class Storage:
         Stores argument `character` if logic is met
     """
 
-    __operators: list = ['/', '*', '+', '-']
+    __operators: list = ['^', '/', '*', '+', '-']
     __special: list = ['C', 'A', 'i']
     __storage: list
     __result: str
