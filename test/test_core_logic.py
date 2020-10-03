@@ -27,11 +27,23 @@ class CoreLogicTests(unittest.TestCase):
 
         self.assertEqual(result, "10.0")
 
+    def test_parenthesis_precedence_2(self):
+        test_case_input = ['6', '/', '(', '4', '+', '2', ')']
+        result = self.go_for_testing(test_case_input)
+
+        self.assertEqual(result, "1.0")
+
     def test_bracket_balencer(self):
         test_case_input = ['(', '3', '*', '(', '4', '+', '1']
         result = self.go_for_testing(test_case_input)
 
         self.assertEqual(result, "15.0")
+
+    def test_bodmas(self):
+        test_case_input = ['44', '-', '3', '/', '6', '+', '2', '*', '2']
+        result = self.go_for_testing(test_case_input)
+
+        self.assertEqual(result, "47.5")
 
 if __name__ == "__main__":
     unittest.main()
