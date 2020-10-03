@@ -49,39 +49,40 @@ class Calculate():
         expr_as_list[0] is returned.
         """
 
-        while self.__operators[0] in self.expr_as_list:
+        left_paren = self.__operators[0]
+        while left_paren in self.expr_as_list:
             expression = self.__bracket_balencer(self.expr_as_list.copy())
             left_p = expression.index('(')
-            if ')' not in self.expr_as_list:
-                self.expr_as_list.pop(left_p)
-            else:
-                right_p = (len(expression)
-                           - list(reversed(expression)).index(')') - 1)
-                sub_expression = expression[left_p+1:right_p]
-                new_instance = Calculate(sub_expression)
-                self.expr_as_list[left_p:right_p+1] = [
-                        new_instance.calculate()
-                        ]
+            right_p = (len(expression)
+                       - list(reversed(expression)).index(')') - 1)
+            sub_expression = expression[left_p+1:right_p]
+            new_instance = Calculate(sub_expression)
+            self.expr_as_list[left_p:right_p+1] = [
+                    new_instance.calculate()
+                    ]
 
-        while self.__operators[1] in self.expr_as_list:
+        exponent = self.__operators[1]
+        while exponent in self.expr_as_list:
+            index = self.expr_as_list.index(exponent)
+            self.__partial_calculate(index)
+
+        div_mul_op = self.__operators[2:4]
+        gen_mul_div = (g for g in div_mul_op if g in self.expr_as_list)
+        while any(gen_mul_div):
             index = self.expr_as_list.index(self.__operators[1])
             self.__partial_calculate(index)
-        while self.__operators[2] in self.expr_as_list:
-            index = self.expr_as_list.index(self.__operators[2])
-            self.__partial_calculate(index)
-        while self.__operators[3] in self.expr_as_list:
+
+        add_sub_op = self.__operators[4:6]
+        gen_add_sub = (g for g in add_sub_op if g in self.expr_as_list)
+        while any(gen_add_sub):
             index = self.expr_as_list.index(self.__operators[3])
             self.__partial_calculate(index)
-        while self.__operators[4] in self.expr_as_list:
-            index = self.expr_as_list.index(self.__operators[4])
-            self.__partial_calculate(index)
-        while self.__operators[5] in self.expr_as_list:
-            index = self.expr_as_list.index(self.__operators[5])
-            self.__partial_calculate(index)
+
         self.ans = self.expr_as_list[0]
         return self.ans
 
     def __partial_calculate(self, index: int) -> None:
+        print(self.expr_as_list)
         """Computes single chunk of expression from provided operator index
 
         From given operator index, left and right operand index assumes index-1
