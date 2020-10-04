@@ -62,17 +62,17 @@ class Calculate():
                     ]
 
         exp_op = self.__operators[1]
-        gen_exp = (g for g in exp_op if g in self.expr_as_list)
+        gen_exp = self.__create_op_gen(exp_op)
         if any(gen_exp):
             self.__call_partial_calculate(exp_op)
 
         div_mul_op = self.__operators[2:4]
-        gen_mul_div = (g for g in div_mul_op if g in self.expr_as_list)
+        gen_mul_div = self.__create_op_gen(div_mul_op)
         if any(gen_mul_div):
             self.__call_partial_calculate(div_mul_op)
 
         add_sub_op = self.__operators[4:6]
-        gen_add_sub = (g for g in add_sub_op if g in self.expr_as_list)
+        gen_add_sub = self.__create_op_gen(add_sub_op)
         if any(gen_add_sub):
             self.__call_partial_calculate(add_sub_op)
 
@@ -124,3 +124,7 @@ class Calculate():
             index = next(indices, False)
             if not index: break
             self.__partial_calculate(index)
+
+    def __create_op_gen(self, operator: list):
+        generator = (g for g in operator if g in self.expr_as_list)
+        return generator
