@@ -61,28 +61,25 @@ class Calculate():
                     new_instance.calculate()
                     ]
 
-        exponent = self.__operators[1]
-        while exponent in self.expr_as_list:
-            index = self.expr_as_list.index(exponent)
-            self.__partial_calculate(index)
+        exp_op = self.__operators[1]
+        gen_exp = (g for g in exp_op if g in self.expr_as_list)
+        if any(gen_exp):
+            self.__call_partial_calculate(exp_op)
 
         div_mul_op = self.__operators[2:4]
         gen_mul_div = (g for g in div_mul_op if g in self.expr_as_list)
-        while any(gen_mul_div):
-            index = self.expr_as_list.index(self.__operators[1])
-            self.__partial_calculate(index)
+        if any(gen_mul_div):
+            self.__call_partial_calculate(div_mul_op)
 
         add_sub_op = self.__operators[4:6]
         gen_add_sub = (g for g in add_sub_op if g in self.expr_as_list)
-        while any(gen_add_sub):
-            index = self.expr_as_list.index(self.__operators[3])
-            self.__partial_calculate(index)
+        if any(gen_add_sub):
+            self.__call_partial_calculate(add_sub_op)
 
-        self.ans = self.expr_as_list[0]
-        return self.ans
+        self.ans = self.expr_as_list
+        return self.ans[0]
 
     def __partial_calculate(self, index: int) -> None:
-        print(self.expr_as_list)
         """Computes single chunk of expression from provided operator index
 
         From given operator index, left and right operand index assumes index-1
@@ -119,3 +116,11 @@ class Calculate():
             expression.extend(right_paren * count_diff)
             return expression
         return expression
+
+    def __call_partial_calculate(self, operator):
+        while True:
+            indices = (i for i, e in enumerate(self.expr_as_list) if
+                       e in operator)
+            index = next(indices, False)
+            if not index: break
+            self.__partial_calculate(index)
