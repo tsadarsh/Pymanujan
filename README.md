@@ -16,6 +16,15 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 - [x] Bind 'Number-pad' keys to enter input.
 - [ ] Option to switch between 'Simple' to 'Advanced' mode. Advanced mode should have more funtionalities.
 
+#### Developer Installation:
+Clone this repository from Github. Then create a virtual-environment and install the dependencies.
+```bash
+git clone https://github.com/maddypie/PyCalc.git
+python3 -m venv env
+source env/bin/activate
+python -m pip install -r requirements.txt
+```
+
 #### Contribution :nerd_face:
 All are welcome :pray: to contribute to this project. Start from going through the ```source.py``` which has good amount comments and documentation along the code. Currently the focus is on improving the GUI. Create an *Issue* and start a discussion before working on a seperate *Fork*, collabaration always results in better ideas!
 
