@@ -25,7 +25,7 @@ class Calculate():
             '+': lambda x, y: x+y,
             '-': lambda x, y: x-y
             }
-    __operators: list = ['(' ,'^', '/', '*', '+', '-']
+    __operators: list = ['(', '^', '/', '*', '+', '-']
 
     def __init__(self, expr_as_list: list):
         """
@@ -122,7 +122,8 @@ class Calculate():
             indices = (i for i, e in enumerate(self.expr_as_list) if
                        e in operator)
             index = next(indices, False)
-            if not index: break
+            if not index:
+                break
             self.__partial_calculate(index)
 
     def __create_op_gen(self, operator: list):
