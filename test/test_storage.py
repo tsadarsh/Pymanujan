@@ -76,5 +76,6 @@ class StorageTests(unittest.TestCase):
 
         self.assertEqual(display, "4 * (3 + 1)")
 
+
 if __name__ == '__main__':
     unittest.main()
