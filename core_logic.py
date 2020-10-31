@@ -19,13 +19,14 @@ class Calculate():
 
     ans: str
     _get_value = {
+            'x!': lambda x, y: Calculate.factorial(None,int(x),int(y)),
             '^': lambda x, y: x**y,
             '/': lambda x, y: x/y,
             '*': lambda x, y: x*y,
             '+': lambda x, y: x+y,
             '-': lambda x, y: x-y
             }
-    __operators: list = ['(', '^', '/', '*', '+', '-']
+    __operators: list = ['(', '^', '/', '*', '+', '-', 'x!']
 
     def __init__(self, expr_as_list: list):
         """
@@ -61,6 +62,9 @@ class Calculate():
                     new_instance.calculate()
                     ]
 
+        fact_op = self.__operators[6]
+        if any(fact_op):
+            self.__call_partial_calculate(fact_op)
         exp_op = self.__operators[1]
         gen_exp = self.__create_op_gen(exp_op)
         if any(gen_exp):
@@ -129,3 +133,12 @@ class Calculate():
     def __create_op_gen(self, operator: list):
         generator = (g for g in operator if g in self.expr_as_list)
         return generator
+
+    def factorial(self, num, num2):
+        print(self, num, num2)
+        result = 1
+        for i in range(1, num + 1):
+            result = result * i
+        print(result)
+        return result
+
