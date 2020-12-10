@@ -16,6 +16,7 @@ class Storage:
 
     __operators: list = ['^', '/', '*', '+', '-']
     __special: list = ['C', 'A', 'i']
+    __const: list = {'e': '2.71828', '\u03C0': '3.14159'}
     __storage: list
     __result: str
 
@@ -60,6 +61,8 @@ class Storage:
             return self.__put_operator(character)
         if character in self.__special:
             return self.__apply_special(character)
+        if character in self.__const:
+            return self.__put_const(character)
         if character == '.':
             return self.__put_dot(character)
         if character == '(':
@@ -124,8 +127,23 @@ class Storage:
         elif character == 'i':
             self.__storage[-1] = str(neg(float(self.__storage[-1])))
 
+    def __put_const(self, character):
+        """Stores character of type constant
+
+        If storage is empty or previous entry is operator constane is appended.
+        Multiplier operator and then the constant is appended in other cases
+        """
+
+        character = self.__const[character]
+        if len(self.__storage) == 0:
+            self.__storage.append(character)
+        elif self.is_not_digit(self.__storage[-1]):
+            self.__storage.append(character)
+        else:
+            self.__storage.extend(['*', character])
+
     def __put_digit(self, character) -> None:
-        """Stores chracter of type digit
+        """Stores character of type digit
 
         If previous entry to storage is not a digit the new character is
         appeded. Otherwise, new character is combined with the lat digit. For
