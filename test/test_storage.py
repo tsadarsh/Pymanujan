@@ -76,6 +76,23 @@ class StorageTests(unittest.TestCase):
 
         self.assertEqual(display, "4 * (3 + 1)")
 
+    def test_const_substitution(self):
+        test_case_input = "e"
+        display = self.go_for_testing(test_case_input)
+
+        self.assertEqual(display, "2.71828")
+
+        test_case_input = "\u03C0"
+        display = self.go_for_testing(test_case_input)
+
+        self.assertEqual(display, "3.14159")
+
+    def test_implicit_mul_operator_before_constant(self):
+        test_case_input = "2\u03C0e"
+        display = self.go_for_testing(test_case_input)
+
+        self.assertEqual(display, "2 * 3.14159 * 2.71828")
+
 
 if __name__ == '__main__':
     unittest.main()
