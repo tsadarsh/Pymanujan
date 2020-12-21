@@ -1,3 +1,6 @@
+import math
+
+
 class Calculate():
     """Class to compute final asnwer from list of operands and operators
 
@@ -19,13 +22,25 @@ class Calculate():
 
     ans: str
     _get_value = {
+            'sin': lambda x: math.sin(x),
+            'cos': lambda x: math.cos(x),
+            'tan': lambda x: math.tan(x),
+            'asin': lambda x: math.asin(x),
+            'acos': lambda x: math.acos(x),
+            'atan': lambda x: math.atan(x),
+            '!': lambda x: math.factorial(x),
+            'log': lambda x: math.log10(x),
+            'ln': lambda x: math.log(x),
             '^': lambda x, y: x**y,
             '/': lambda x, y: x/y,
             '*': lambda x, y: x*y,
             '+': lambda x, y: x+y,
             '-': lambda x, y: x-y
             }
-    __operators: list = ['(', '^', '/', '*', '+', '-']
+    __unary_operators = ['sin', 'cos', 'tan', 'asin', 'acos',
+                         'atan', '!', 'log', 'ln']
+    __operators: list = ['(', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
+                         '!', 'log', 'ln', '^', '/', '*', '+', '-']
 
     def __init__(self, expr_as_list: list):
         """
@@ -61,17 +76,25 @@ class Calculate():
                     new_instance.calculate()
                     ]
 
-        exp_op = self.__operators[1]
+        unary_op = self.__operators[1:10]
+        gen_unary = self.__create_op_gen(unary_op)
+        if any(gen_unary):
+            self.__call_partial_calculate(unary_op)
+
+        # exponent calculation
+        exp_op = self.__operators[10]
         gen_exp = self.__create_op_gen(exp_op)
         if any(gen_exp):
             self.__call_partial_calculate(exp_op)
 
-        div_mul_op = self.__operators[2:4]
+        # division and multiplication calculation
+        div_mul_op = self.__operators[11:13]
         gen_mul_div = self.__create_op_gen(div_mul_op)
         if any(gen_mul_div):
             self.__call_partial_calculate(div_mul_op)
 
-        add_sub_op = self.__operators[4:6]
+        # addition and subtraction calculation
+        add_sub_op = self.__operators[13:15]
         gen_add_sub = self.__create_op_gen(add_sub_op)
         if any(gen_add_sub):
             self.__call_partial_calculate(add_sub_op)
@@ -99,6 +122,25 @@ class Calculate():
         """
 
         operator = self.expr_as_list[index]
+        print(self.expr_as_list)
+        # unary opreator calculation
+        if operator in self.__unary_operators:
+            if operator != '!':
+                unary_operand = float(self.expr_as_list[index+1])
+                sub_result = self._get_value[operator](unary_operand)
+                print('replacing ', self.expr_as_list[index: index+2])
+                print('with', sub_result)
+                self.expr_as_list[index: index+2] = [str(sub_result)]
+            else:
+                unary_operand = float(self.expr_as_list[index-1])
+                sub_result = self._get_value[operator](unary_operand)
+                print('replacing ', self.expr_as_list[index: index+2])
+                print('with', sub_result)
+                self.expr_as_list[index-1: index+1] = [str(sub_result)]
+            print(self.expr_as_list)
+            return
+
+        # all other operator with two operands
         left_operand = float(self.expr_as_list[index-1])
         try:
             right_operand = float(self.expr_as_list[index+1])
