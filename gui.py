@@ -16,7 +16,7 @@ class GUI(Tk):
         ''' View initializer '''
         super().__init__()
         # Main window properties
-        self.title("PyCalc (v1.1)")
+        self.title("PyCalc (v2.1-alpha)")
         self.resizable(False, False)
         self.styler = ttk.Style()
         self._layout = ['*', '/', 'C', 'AC',
