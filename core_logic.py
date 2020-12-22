@@ -159,14 +159,16 @@ class Calculate():
             return expression
         return expression
 
-    def __call_partial_calculate(self, operator):
-        while True:
-            indices = (i for i, e in enumerate(self.expr_as_list) if
-                       e in operator)
-            index = next(indices, False)
-            if not index:
-                break
-            self.__partial_calculate(index)
+    def __call_partial_calculate(self, found_operator):
+        """TO DO """
+        THERE_IS_OPERATOR = True
+        while THERE_IS_OPERATOR:
+            for index, operator in enumerate(self.expr_as_list):
+                if operator in found_operator:
+                    self.__partial_calculate(index)
+                    break
+            else:
+                THERE_IS_OPERATOR = False
 
     def __create_op_gen(self, operator: list):
         generator = (g for g in operator if g in self.expr_as_list)
