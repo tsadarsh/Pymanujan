@@ -122,22 +122,22 @@ class Calculate():
         """
 
         operator = self.expr_as_list[index]
-        print(self.expr_as_list)
+        #print(self.expr_as_list)
         # unary opreator calculation
         if operator in self.__unary_operators:
             if operator != '!':
                 unary_operand = float(self.expr_as_list[index+1])
                 sub_result = self._get_value[operator](unary_operand)
-                print('replacing ', self.expr_as_list[index: index+2])
-                print('with', sub_result)
+                #print('replacing ', self.expr_as_list[index: index+2])
+                #print('with', sub_result)
                 self.expr_as_list[index: index+2] = [str(sub_result)]
             else:
-                unary_operand = float(self.expr_as_list[index-1])
+                unary_operand = int(self.expr_as_list[index-1])
                 sub_result = self._get_value[operator](unary_operand)
-                print('replacing ', self.expr_as_list[index: index+2])
-                print('with', sub_result)
+                #print('replacing ', self.expr_as_list[index: index+2])
+                #print('with', sub_result)
                 self.expr_as_list[index-1: index+1] = [str(sub_result)]
-            print(self.expr_as_list)
+            #print(self.expr_as_list)
             return
 
         # all other operator with two operands
