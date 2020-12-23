@@ -14,7 +14,11 @@ class Storage:
         Stores argument `character` if logic is met
     """
 
-    __operators: list = ['^', '/', '*', '+', '-']
+    __unary_operators: list = ['sin', 'cos', 'tan', 'asin', 'acos',
+                               'atan', '!', 'log', 'ln']
+    __binary_operators: list = ['^', '/', '*', '+', '-']
+    __operators: list = ['^', '/', '*', '+', '-', 'sin', 'cos', 'tan',
+                         'asin', 'acos', 'atan', '!', 'log', 'ln']
     __special: list = ['C', 'A', 'i']
     __const: list = {'e': '2.71828', '\u03C0': '3.14159'}
     __storage: list
@@ -57,8 +61,10 @@ class Storage:
             Character to be stored
         """
 
-        if character in self.__operators:
-            return self.__put_operator(character)
+        if character in self.__unary_operators:
+            return self.__put_unary_operator(character)
+        if character in self.__binary_operators:
+            return self.__put_binary_operator(character)
         if character in self.__special:
             return self.__apply_special(character)
         if character in self.__const:
@@ -80,7 +86,17 @@ class Storage:
         except ValueError:
             return True
 
-    def __put_operator(self, character) -> None:
+    def __put_unary_operator(self, character) -> None:
+        if len(self.__storage) == 0:
+            self.__storage.append(character)
+        elif not self.is_not_digit(self.__storage[-1]):
+            self.__storage.extend(['*', character])
+        elif self.__storage[-1] in self.__unary_operators:
+            self.__storage.extend(['*', '(', character])
+        else:
+            self.__storage.append(character)
+
+    def __put_binary_operator(self, character) -> None:
         """Logic for characters of type operator before storing
 
         In case storage is empty, if operator is addive, `0` followed by the
@@ -100,7 +116,7 @@ class Storage:
                                   [self.__operators.index(character)//2],
                                    character])
         else:
-            if self.__storage[-1] in self.__operators:
+            if self.__storage[-1] in self.__binary_operators:
                 self.__storage[-1] = character
             else:
                 self.__storage.append(character)
