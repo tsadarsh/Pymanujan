@@ -44,7 +44,7 @@ class GUI(Tk):
         self.content.grid()
         self.label_text = StringVar()
 
-    def default_style_settings(self):
+    def new1_style_settings(self):
         self.styler.configure("TLabel",
                               font='Times 20')
         self.styler.configure("TButton",
@@ -62,6 +62,15 @@ class GUI(Tk):
                               foreground='green4')
         self.styler.configure("Outliner.TFrame",
                               background='snow2')
+
+    def default_style_settings(self):
+        self.styler.configure("TLabel",font="Elephant")
+        self.styler.configure("TButton",relief="raised",width="5",padding="8",background="black",foreground="red",borderwidth="3")
+        self.styler.configure("EqualButton.TButton",relief="flat",background="black",foreground="red")
+        self.styler.configure("EqualButton2.TButton",relief="sunken",background="red",foreground="red")
+        self.styler.configure("Outliner.TFrame",background="black")
+
+        
 
     def create_basic_display(self):
         ''' Create the display '''
@@ -101,7 +110,7 @@ class GUI(Tk):
         display_frame = ttk.Frame(self.mainframe2, relief='flat')
         display_frame['borderwidth'] = 10
         display_label = ttk.Label(display_frame,
-                                  textvariable=self.label_text)
+                                  textvariable=self.label_text,background="black")
         # grid above widgets
         display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
         display_label.grid(row=0, column=0, columnspan=4)
@@ -134,9 +143,9 @@ class GUI(Tk):
                 )
             if(len(to_display) > 17):
                 FONT = 'Times '+str(20*17//len(to_display))
-                ttk.Style().configure("TLabel", font=FONT)
+                ttk.Style().configure("TLabel", font='Elephant',background="black",foreground="red")
             else:
-                ttk.Style().configure("TLabel", font='Times 20')
+                ttk.Style().configure("TLabel", font='Elephant',background="black",foreground="red")
             self.label_text.set(to_display)
         elif bt == 'Copy':
             self._copy_to_clipboard(self.logic.show_storage_as_list())
@@ -145,9 +154,9 @@ class GUI(Tk):
             to_display = self.logic.show_storage()
             if(len(to_display) > 17):
                 FONT = 'Times '+str(20*17//len(to_display))
-                ttk.Style().configure("TLabel", font=FONT)
+                ttk.Style().configure("TLabel", font='Elephant',background="black",foreground="red")
             else:
-                ttk.Style().configure("TLabel", font='Times 20')
+                ttk.Style().configure("TLabel", font='Elephant',background="black",foreground="red")
             self.label_text.set(to_display)
 
     def keyboard_event_binding(self):
@@ -179,3 +188,4 @@ class GUI(Tk):
 
     def _copy_to_clipboard(self, inputs_as_list):
         to_clipboard("".join(inputs_as_list))
+
