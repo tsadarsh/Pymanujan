@@ -141,7 +141,10 @@ class GUI(Tk):
         elif bt == 'Copy':
             self._copy_to_clipboard(self.logic.show_storage_as_list())
         else:
-            self.logic.into_storage(bt)
+            if bt == 'x!':
+                self.logic.into_storage('!')
+            else:
+                self.logic.into_storage(bt)
             to_display = self.logic.show_storage()
             if(len(to_display) > 17):
                 FONT = 'Times '+str(20*17//len(to_display))

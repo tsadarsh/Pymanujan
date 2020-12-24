@@ -90,8 +90,13 @@ class Storage:
         if len(self.__storage) == 0:
             self.__storage.append(character)
         elif not self.is_not_digit(self.__storage[-1]):
-            self.__storage.extend(['*', character])
+            if character == '!':
+                self.__storage.append(character)
+            else:
+                self.__storage.extend(['*', character])
         elif self.__storage[-1] in self.__unary_operators:
+            if character == '!':
+                self.__storage.extend(['*', '(', '1', character])
             self.__storage.extend(['*', '(', character])
         else:
             self.__storage.append(character)
