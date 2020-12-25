@@ -22,12 +22,12 @@ class Calculate():
 
     ans: str
     _get_value = {
-            'sin': lambda x: math.sin(x),
-            'cos': lambda x: math.cos(x),
-            'tan': lambda x: math.tan(x),
-            'asin': lambda x: math.asin(x),
-            'acos': lambda x: math.acos(x),
-            'atan': lambda x: math.atan(x),
+            'sin': lambda x: math.sin(math.radians(x)),
+            'cos': lambda x: math.cos(math.radians(x)),
+            'tan': lambda x: math.tan(math.radians(x)),
+            'asin': lambda x: math.degrees(math.asin(x)),
+            'acos': lambda x: math.degrees(math.acos(x)),
+            'atan': lambda x: math.degrees(math.atan(x)),
             '!': lambda x: math.factorial(x),
             'log': lambda x: math.log10(x),
             'ln': lambda x: math.log(x),
