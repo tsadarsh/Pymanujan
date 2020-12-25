@@ -17,6 +17,8 @@ class Storage:
     __unary_operators: list = ['sin', 'cos', 'tan', 'asin', 'acos',
                                'atan', '!', 'log', 'ln']
     __binary_operators: list = ['^', '/', '*', '+', '-']
+    __dot = ['.']
+    __left_paren, __right_paren = '(', ')'
     __operators: list = ['^', '/', '*', '+', '-', 'sin', 'cos', 'tan',
                          'asin', 'acos', 'atan', '!', 'log', 'ln']
     __special: list = ['C', 'A', 'i']
@@ -34,12 +36,15 @@ class Storage:
         single string with whitespace around operators.
         """
 
-        this = ''.join(
-                       map(
-                           lambda i: ' '+i+' ' if i in self.__operators else i,
-                           self.__storage)
-                           )
-        return this
+        output = ''
+        for ind, char in enumerate(self.__storage, start=1):
+            if char in self.__binary_operators:
+                output += ' '+char+' '
+            elif char in self.__unary_operators:
+                output += char+' '
+            else:
+                output += char
+        return output
 
     def show_storage_as_list(self) -> list:
         """Returns stored characters as a list"""
@@ -49,11 +54,23 @@ class Storage:
     def into_storage(self, character: str) -> None:
         """Stores argument `character` if logic is met.
 
-        Logic checks if `character` is operator, special or dot and applies
-        necessary operations internally. Private-method(p.m) `put_operator`
-        is called if logic identifies `character` as an operator. Similarly,
-        p.m `apply_special`, `put_dot` and `put_digit` is called when logic
-        identifies a special, dot and digit char respectively.
+        Checks if `character` is unary-operator, binary-operator, special, dot,
+        parenthesis, and stores in necessary format by calling corresponding
+        method; `put_unary_operator` for `unary_operator` type, `put_special`
+        for `special` and so on. (see reference)
+
+        Reference
+        ---------
+            TYPE OF CHARACTER | METHOD CALLED
+            -----------------   -------------------
+            unary_operator    | put_unary_operator
+            binary_operator   | put_binary_operator
+            special           | apply_special
+            const             | put_const
+            dot               | put_dot
+            left_paren        | put_left_paren
+            right_paren       | put_right_paren
+            .isnumeric()      | put_digit
 
         Arguments
         ---------
@@ -63,21 +80,22 @@ class Storage:
 
         if character in self.__unary_operators:
             return self.__put_unary_operator(character)
-        if character in self.__binary_operators:
+        elif character in self.__binary_operators:
             return self.__put_binary_operator(character)
-        if character in self.__special:
+        elif character in self.__special:
             return self.__apply_special(character)
-        if character in self.__const:
+        elif character in self.__const:
             return self.__put_const(character)
-        if character == '.':
+        elif character in self.__dot:
             return self.__put_dot(character)
-        if character == '(':
+        elif character in self.__left_paren:
             return self.__put_left_paren()
-        if character == ')':
+        elif character in self.__right_paren:
             return self.__put_right_paren()
-        if not character.isnumeric() and character != '.':
+        elif character.isnumeric():
+            return self.__put_digit(character)
+        else:
             raise ValueError
-        return self.__put_digit(character)
 
     def is_not_digit(self, item: str):
         try:
