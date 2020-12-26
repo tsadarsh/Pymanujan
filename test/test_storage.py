@@ -1,6 +1,6 @@
 import unittest
 
-from storage import Storage
+from PyCalc.storage import Storage
 
 
 class StorageTests(unittest.TestCase):
