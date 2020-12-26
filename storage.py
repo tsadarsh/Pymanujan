@@ -98,112 +98,123 @@ class Storage:
             raise ValueError
 
     def is_not_digit(self, item: str):
+        """Returns True if string passed is not integer or float.
+
+        Arguments
+        ---------
+        item : str
+            String datatype to check if not integer or not float
+        """
         try:
             float(item)
             return False
         except ValueError:
             return True
 
-    def __put_unary_operator(self, character) -> None:
+    def __put_unary_operator(self, un_opr: str) -> None:
         if len(self.__storage) == 0:
-            self.__storage.append(character)
+            self.__storage.append(un_opr)
         elif not self.is_not_digit(self.__storage[-1]):
-            if character == '!':
-                self.__storage.append(character)
+            if un_opr == '!':
+                self.__storage.append(un_opr)
             else:
-                self.__storage.extend(['*', character])
+                self.__storage.extend(['*', un_opr])
         elif self.__storage[-1] in self.__unary_operators:
-            if character == '!':
-                self.__storage.extend(['*', '(', '1', character])
-            self.__storage.extend(['*', '(', character])
+            if un_opr == '!':
+                self.__storage.extend(['*', '(', '1', un_opr])
+            self.__storage.extend(['*', '(', un_opr])
         else:
-            self.__storage.append(character)
+            self.__storage.append(un_opr)
 
-    def __put_binary_operator(self, character) -> None:
-        """Logic for characters of type operator before storing
+    def __put_binary_operator(self, bin_opr: str) -> None:
+        """Logic for characters of type binary for storing
 
         In case storage is empty, if operator is addive, `0` followed by the
         operator is stored. If operator is multiplicative, `1` followed by the
         operator is stored.
-        If the last element in storage is already an operator, it is replaced.
+        If the previous element in storage is an operator, it is replaced.
         In all other cases operator is appended to storage.
 
         Arguments
         ---------
         operator : str
-            Character should be of type operator
+            Character of type binary_operator
         """
 
         if len(self.__storage) == 0:
             self.__storage.extend([['1', '0']
-                                  [self.__operators.index(character)//2],
-                                   character])
+                                  [self.__operators.index(bin_opr)//2],
+                                   bin_opr])
         else:
             if self.__storage[-1] in self.__binary_operators:
-                self.__storage[-1] = character
+                self.__storage[-1] = bin_opr
             else:
-                self.__storage.append(character)
+                self.__storage.append(bin_opr)
 
-    def __apply_special(self, character) -> None:
+    def __apply_special(self, special: str) -> None:
         """Operations for characters of type special
 
-        If special character is `AC` storage is cleared. `C` removes the last
+        If special character is `A` storage is cleared. `C` removes the last
         stored character. `i` performs multiplicative inverse on last character
-        provided it is not an operator.
 
         Arguments
         ---------
-        character : str
-            Character should be either `AC`, `C` or `i`.
+        special : str
+            Character should be either `A`, `C` or `i`.
         """
 
         if len(self.__storage) == 0:
             return
-        elif character == 'A':
+        elif special == 'A':
             self.__storage.clear()
-        elif character == 'C':
+        elif special == 'C':
             self.__storage.pop(-1)
-        elif character == 'i':
+        elif special == 'i':
             self.__storage[-1] = str(neg(float(self.__storage[-1])))
 
-    def __put_const(self, character):
+    def __put_const(self, const_repr: str) -> None:
         """Stores character of type constant
 
-        If storage is empty or previous entry is operator constane is appended.
+        If storage is empty or previous entry is operator constant is appended.
         Multiplier operator and then the constant is appended in other cases
-        """
-
-        character = self.__const[character]
-        if len(self.__storage) == 0:
-            self.__storage.append(character)
-        elif self.is_not_digit(self.__storage[-1]):
-            self.__storage.append(character)
-        else:
-            self.__storage.extend(['*', character])
-
-    def __put_digit(self, character) -> None:
-        """Stores character of type digit
-
-        If previous entry to storage is not a digit the new character is
-        appeded. Otherwise, new character is combined with the lat digit. For
-        example if previous entry is `9` and latest entry is `8`, previous
-        entry is modified to `98` and stored. If previous entry is `+` and new
-        entry is `3`, `3` and `+` are stored seperately.
 
         Arguments
         ---------
         character : str
-            Character must be of the type digit
+            Character of type `const`
+        """
+
+        const = self.__const[const_repr]
+        if len(self.__storage) == 0:
+            self.__storage.append(const)
+        elif self.is_not_digit(self.__storage[-1]):
+            self.__storage.append(const)
+        else:
+            self.__storage.extend(['*', const])
+
+    def __put_digit(self, digit: str) -> None:
+        """Stores character of type digit
+
+        If previous entry to storage is not a digit the new character is
+        appeded. Otherwise, new character is combined with the last digit. For
+        example if previous entry is `9` and latest entry is `8`, previous
+        entry is modified to `98` and stored. If previous entry is `+` and new
+        entry is `3`, `3` and `+` are stored as seperate elements.
+
+        Arguments
+        ---------
+        digit : str
+            Character of the type `digit`
         """
 
         if len(self.__storage) == 0:
-            self.__storage.append(character)
+            self.__storage.append(digit)
         elif self.is_not_digit(self.__storage[-1]):
-            self.__storage.append(character)
+            self.__storage.append(digit)
         else:
-            self.__storage[-1] += character
+            self.__storage[-1] += digit
 
-    def __put_dot(self, dot='.'):
+    def __put_dot(self, dot: str) -> None:
         """Logic for storing dot character.
 
         If dot is first entry, `0.` is stored. Otherwise dot is appended to
@@ -219,28 +230,28 @@ class Storage:
             self.__storage[-1] += dot
 
     def __put_left_paren(self):
-        """Appends right parenthesis in storage.
+        """Appends left parenthesis in storage.
 
-        Parenthesis is always stored independently. For example `(`, `3` is
-        allowed while `(3` is not allowed."""
-
-        LEFT_PAREN = "("
-        if len(self.__storage) == 0:
-            self.__storage.append(LEFT_PAREN)
-            return
-        elif self.__storage[-1] not in self.__operators:
-            self.__storage.extend(['*', LEFT_PAREN])
-            return
-        self.__storage.append(LEFT_PAREN)
-
-    def __put_right_paren(self):
-        """Logic for adding left parenthesis in storage.
-
-        Right parenthesis(R.P) is added to storage only if `count` of left
-        parenthesis is more that the number of R.P in storage.
+        If previous element is of type digit, multiplication operator followed
+        by left parenthesis is appended in storage.
         """
 
-        left_paren_count = self.__storage.count('(')
-        right_paren_count = self.__storage.count(')')
+        if len(self.__storage) == 0:
+            self.__storage.append(self.__left_paren)
+            return
+        elif self.__storage[-1] not in self.__operators:
+            self.__storage.extend(['*', self.__left_paren])
+            return
+        self.__storage.append(self.__left_paren)
+
+    def __put_right_paren(self):
+        """Logic for adding right parenthesis in storage.
+
+        Right parenthesis is added to storage only if count of left
+        parenthesis is more than count of right parenthesis.
+        """
+
+        left_paren_count = self.__storage.count(self.__left_paren)
+        right_paren_count = self.__storage.count(self.__right_paren)
         if left_paren_count > right_paren_count:
-            self.__storage.append(')')
+            self.__storage.append(self.__right_paren)
