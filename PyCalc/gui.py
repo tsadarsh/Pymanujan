@@ -13,7 +13,6 @@ class GUI(Tk):
     __operators: list = ['/', '*', '+', '-']
 
     def __init__(self):
-        ''' View initializer '''
         super().__init__()
         # Main window properties
         self.title("PyCalc (v2.1-alpha)")
@@ -30,9 +29,10 @@ class GUI(Tk):
                             '+', 'x!', 'log', 'ln',
                             '-', '\u03C0', 'e', '=']
 
-        # Inheriting from Storage for program logic
+        # Inheriting from Storage for program `logic`
         self.logic = Storage()
-        # Set General layout
+
+        # Creating root widgets and variable containers
         self.content = ttk.Notebook(master=self,
                                     padding=(0, 0, 0, 0),
                                     style='Outliner.TFrame')
@@ -45,6 +45,12 @@ class GUI(Tk):
         self.label_text = StringVar()
 
     def default_style_settings(self):
+        """GUI uses this style as default. New styles can be added after this
+        method with the following name convention: <theme_name>_style_setting.
+        This method could get deprecated in future versions; styles and themes
+        could be set using a YAML file.
+        """
+
         self.styler.configure("TLabel",
                               font='Times 20')
         self.styler.configure("TButton",
@@ -64,17 +70,17 @@ class GUI(Tk):
                               background='snow2')
 
     def create_basic_display(self):
-        ''' Create the display '''
+        """This method creates the layout and widgets for BASIC tab"""
         display_frame = ttk.Frame(self.mainframe, relief='flat')
         display_frame['borderwidth'] = 10
         display_label = ttk.Label(display_frame,
                                   textvariable=self.label_text)
-        # grid above widgets
+
         display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
         display_label.grid(row=0, column=0, columnspan=4)
 
     def create_basic_buttons(self):
-        ''' Create buttons under keypad '''
+        """Buttons and their wiring for BASIC tab is contained here"""
         keypad = ttk.Frame(self.mainframe)
         button_objects = {
                 button: ttk.Button(
@@ -98,15 +104,17 @@ class GUI(Tk):
             column += 1
 
     def create_advanced_display(self):
+        """This method creates the layout and widgets for ADVANCED tab"""
         display_frame = ttk.Frame(self.mainframe2, relief='flat')
         display_frame['borderwidth'] = 10
         display_label = ttk.Label(display_frame,
                                   textvariable=self.label_text)
-        # grid above widgets
+
         display_frame.grid(row=0, column=0, columnspan=4, pady=5, padx=5)
         display_label.grid(row=0, column=0, columnspan=4)
 
     def create_advanced_buttons(self):
+        """Buttons and their wiring for ADVANCED tab is contained here"""
         keypad = ttk.Frame(self.mainframe2)
         button_objects = {
                 button: ttk.Button(
@@ -126,32 +134,32 @@ class GUI(Tk):
             row += 1
             column += 1
 
-    def _button_invoke(self, bt):
+    def _button_invoke(self, bt: str) -> None:
+        """Backend logic when buttons are invoked.
+
+        The command for most buttons are same as its button['character'] except
+        for a few, namely `=`, `Copy` and `x!`. Storage instance `logic` is
+        called to input/evaluate the inputs. Refer `storage.py` docs for more
+        info.
+
+        Arguments
+        ---------
+        bt : str
+            character corresponding to the invoked button
+        """
         if bt == '=':
-            ''' If button pressed is '=' '''
-            to_display = 'Ans: '+self._get_answer(
-                self.logic.show_storage_as_list()
-                )
-            if(len(to_display) > 17):
-                FONT = 'Times '+str(20*17//len(to_display))
-                ttk.Style().configure("TLabel", font=FONT)
-            else:
-                ttk.Style().configure("TLabel", font='Times 20')
-            self.label_text.set(to_display)
+            get_storage = self.logic.show_storage_as_list()
+            to_display = 'Ans: '+self._calculate_answer(get_storage)
+            self._adjust_and_set_TLabel_font(to_display)
         elif bt == 'Copy':
             self._copy_to_clipboard(self.logic.show_storage_as_list())
+        elif bt == 'x!':
+            self.logic.into_storage('!')
+            self._adjust_and_set_TLabel_font(to_display)
         else:
-            if bt == 'x!':
-                self.logic.into_storage('!')
-            else:
-                self.logic.into_storage(bt)
+            self.logic.into_storage(bt)
             to_display = self.logic.show_storage()
-            if(len(to_display) > 17):
-                FONT = 'Times '+str(20*17//len(to_display))
-                ttk.Style().configure("TLabel", font=FONT)
-            else:
-                ttk.Style().configure("TLabel", font='Times 20')
-            self.label_text.set(to_display)
+            self._adjust_and_set_TLabel_font(to_display)
 
     def keyboard_event_binding(self):
         self.bind("<Key>", self._callback)
@@ -176,9 +184,20 @@ class GUI(Tk):
         elif e.char == ')':
             self._button_invoke(')')
 
-    def _get_answer(self, inputs_as_list):
+    def _calculate_answer(self, inputs_as_list):
         calculate_instance = Calculate(inputs_as_list)
         return calculate_instance.calculate()
 
     def _copy_to_clipboard(self, inputs_as_list):
+        """Copies content of display label to clipboard."""
         to_clipboard("".join(inputs_as_list))
+
+    def _adjust_and_set_TLabel_font(self, to_display):
+        """Dynamic font size setting for display label widget."""
+        if(len(to_display) > 17):
+            font_size = 20*17//len(to_display)
+        else:
+            font_size = 20
+        FONT = 'Times '+str(font_size)
+        self.styler.configure("TLabel", font=FONT)
+        self.label_text.set(to_display)
