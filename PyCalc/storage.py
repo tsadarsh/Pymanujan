@@ -88,9 +88,9 @@ class Storage:
             return self.__put_const(character)
         elif character in self.__dot:
             return self.__put_dot(character)
-        elif character in self.__left_paren:
+        elif character == self.__left_paren:
             return self.__put_left_paren()
-        elif character in self.__right_paren:
+        elif character == self.__right_paren:
             return self.__put_right_paren()
         elif character.isnumeric():
             return self.__put_digit(character)
