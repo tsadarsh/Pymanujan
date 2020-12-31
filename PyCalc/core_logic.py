@@ -1,7 +1,7 @@
 import math
 
 
-from exception import ExpressionNotCalculatedCompletely
+from .exception import ExpressionNotCalculatedCompletely
 
 
 class Calculate():
