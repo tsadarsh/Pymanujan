@@ -1,6 +1,6 @@
 import unittest
 
-from PyCalc.core_logic import Calculate
+from Pymanujan.core_logic import Calculate
 
 
 class CoreLogicTests(unittest.TestCase):
