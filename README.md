@@ -7,7 +7,7 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 
 #### User interface of PyCalc *v2.0-alpha* :desktop_computer:
 
-![As of v2.0-alpha](https://github.com/maddypie/PyCalc/blob/master/PyCalc-v2.0-alpha.png)
+![As of v2.0-alpha](https://github.com/maddypie/PyCalc/blob/master/Pymanujan-v2.0-alpha.png)
 
 #### Tasks List :writing_hand:
 - [x] **Refactor ~~source.py~~ source code.**

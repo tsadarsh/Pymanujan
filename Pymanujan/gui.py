@@ -4,8 +4,8 @@ from tkinter import StringVar
 
 from pyperclip import copy as to_clipboard
 
-from storage import Storage
-from core_logic import Calculate
+from .storage import Storage
+from .core_logic import Calculate
 
 
 class GUI(Tk):
@@ -15,7 +15,7 @@ class GUI(Tk):
     def __init__(self):
         super().__init__()
         # Main window properties
-        self.title("PyCalc (v2.1-alpha)")
+        self.title("Pymanujan (v2.0-alpha)")
         self.resizable(False, False)
         self.styler = ttk.Style()
         self._layout = ['*', '/', 'C', 'AC',
