@@ -7,7 +7,7 @@ Currently the program supports 'Addition :heavy_plus_sign:', 'Subtraction :heavy
 
 #### User interface of Pymanujan *v2.0-alpha* :desktop_computer:
 
-![As of v2.0-alpha](https://drive.google.com/file/d/1nH_8BpzOnZnRF5_wheERnEylybSPEaxf/view?usp=sharing)
+![As of v2.0-alpha](https://github.com/maddypie/Pymanujan/blob/master/Pymanujan-v2.0-alpha.png)
 
 #### Tasks List :writing_hand:
 - [x] **Refactor ~~source.py~~ source code.**
