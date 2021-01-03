@@ -1,6 +1,6 @@
 import unittest
 
-from storage import Storage
+from Pymanujan.storage import Storage
 
 
 class StorageTests(unittest.TestCase):
@@ -92,6 +92,24 @@ class StorageTests(unittest.TestCase):
         display = self.go_for_testing(test_case_input)
 
         self.assertEqual(display, "2 * 3.14159 * 2.71828")
+
+    def test_correct_spacing_for_str_repr(self):
+        test_case_input = ['sin', '3', '0', '+', '4', '(', 'ln', 'e']
+        display = self.go_for_testing(test_case_input)
+
+        self.assertEqual(display, "sin 30 + 4 * (ln 2.71828")
+
+    def test_auto_nesting_of_unary_operators(self):
+        test_case_input = ['log', 'sin', '3', '0']
+        display = self.go_for_testing(test_case_input)
+
+        self.assertEqual(display, "log  * (sin 30")
+
+    def test_factorial_input(self):
+        test_case_input = "3!-4"
+        display = self.go_for_testing(test_case_input)
+
+        self.assertEqual(display, "3!  - 4")
 
 
 if __name__ == '__main__':

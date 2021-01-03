@@ -1,4 +1,4 @@
-from gui import GUI
+from Pymanujan.gui import GUI
 
 
 def main() -> None:
