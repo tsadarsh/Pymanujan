@@ -15,7 +15,7 @@ class GUI(Tk):
     def __init__(self):
         super().__init__()
         # Main window properties
-        self.title("Pymanujan (v2.0-alpha)")
+        self.title("Pymanujan (v2.0)")
         self.resizable(False, False)
         self.styler = ttk.Style()
         self._layout = ['*', '/', 'C', 'AC',
@@ -39,8 +39,8 @@ class GUI(Tk):
         self.mainframe = ttk.Frame(self.content,
                                    relief='flat')
         self.mainframe2 = ttk.Frame(self.content)
-        self.content.add(self.mainframe, text='Basic')
-        self.content.add(self.mainframe2, text='Advanced')
+        self.content.add(self.mainframe, text='         BASIC          ')
+        self.content.add(self.mainframe2, text='        ADVANCED        ')
         self.content.grid()
         self.label_text = StringVar()
 
