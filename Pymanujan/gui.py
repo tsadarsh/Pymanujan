@@ -39,8 +39,8 @@ class GUI(Tk):
         self.mainframe = ttk.Frame(self.content,
                                    relief='flat')
         self.mainframe2 = ttk.Frame(self.content)
-        self.content.add(self.mainframe, text='         BASIC          ')
-        self.content.add(self.mainframe2, text='        ADVANCED        ')
+        self.content.add(self.mainframe, text='            Basic           ')
+        self.content.add(self.mainframe2, text='         Advanced          ')
         self.content.grid()
         self.label_text = StringVar()
 
@@ -52,20 +52,27 @@ class GUI(Tk):
         """
 
         self.styler.configure("TLabel",
+                              foreground='gray1',
+                              background='pink1',
                               font='Times 20')
         self.styler.configure("TButton",
+                              font='Times 15 italic',
                               relief='flat',
                               width='5',
-                              padding='10',
-                              background='bisque')
-        self.styler.configure("EqualButton.TButton",
-                              relief='falt',
-                              background='SeaGreen2',
-                              foreground='green4')
-        self.styler.configure("EqualButton2.TButton",
+                              padding='7',
+                              foreground='snow',
+                              background='purple1')
+        self.styler.configure("Numerals.TButton",
+                              font='Times 15',
                               relief='flat',
-                              background='firebrick1',
-                              foreground='green4')
+                              width='5',
+                              padding='7',
+                              foreground='snow',
+                              background='purple1')
+        self.styler.configure("EqualButton.TButton",
+                              relief='flat',
+                              background='DarkOrchid1',
+                              foreground='gray1')
         self.styler.configure("Outliner.TFrame",
                               background='snow2')
 
@@ -96,6 +103,10 @@ class GUI(Tk):
         button_objects['+/-']['command'] = lambda: self._button_invoke('i')
         button_objects['=']['style'] = 'EqualButton.TButton'
 
+        for button_char in self._layout:
+            if button_char.isnumeric():
+                button_objects[button_char]['style'] = "Numerals.TButton"
+
         keypad.grid()
         row, column = 0, 0
         for button in button_objects.values():
@@ -125,7 +136,7 @@ class GUI(Tk):
                         )
                 for button in self._adv_layout
                 }
-        button_objects['=']['style'] = 'EqualButton2.TButton'
+        button_objects['=']['style'] = 'EqualButton.TButton'
 
         keypad.grid()
         row, column = 0, 0
@@ -147,42 +158,37 @@ class GUI(Tk):
         bt : str
             character corresponding to the invoked button
         """
+        to_display = self.logic.show_storage()
         if bt == '=':
             get_storage = self.logic.show_storage_as_list()
             to_display = 'Ans: '+self._calculate_answer(get_storage)
-            self._adjust_and_set_TLabel_font(to_display)
         elif bt == 'Copy':
             self._copy_to_clipboard(self.logic.show_storage_as_list())
         elif bt == 'x!':
             self.logic.into_storage('!')
-            self._adjust_and_set_TLabel_font(to_display)
+            to_display = self.logic.show_storage()
         else:
             self.logic.into_storage(bt)
             to_display = self.logic.show_storage()
-            self._adjust_and_set_TLabel_font(to_display)
+        self._adjust_and_set_TLabel_font(to_display)
 
     def keyboard_event_binding(self):
         self.bind("<Key>", self._callback)
 
     def _callback(self, e):
+        key_map = {'c': 'Copy',
+                   'a': 'A',
+                   'i': 'i',
+                   '!': 'x!',
+                   '\r': '=',
+                   '\x08': 'C',
+                   'b': 'C'}
         if e.char.lower() in self._layout:
             self._button_invoke(e.char)
-        elif e.char.lower() == 'c':
-            self._button_invoke('Copy')
-        elif e.char.lower() == 'a':
-            self._button_invoke('A')
-        elif e.char.lower() == 'i':
-            self._button_invoke('i')
-        elif e.char == '\r':
-            self._button_invoke('=')
-        elif e.char.lower() in ('\x08', 'b'):
-            self._button_invoke('C')
+        elif e.char.lower() in key_map:
+            self._button_invoke(key_map[e.char.lower()])
         elif e.char.lower() == 'q':
             self.destroy()
-        elif e.char == '(':
-            self._button_invoke('(')
-        elif e.char == ')':
-            self._button_invoke(')')
 
     def _calculate_answer(self, inputs_as_list):
         calculate_instance = Calculate(inputs_as_list)
@@ -194,8 +200,8 @@ class GUI(Tk):
 
     def _adjust_and_set_TLabel_font(self, to_display):
         """Dynamic font size setting for display label widget."""
-        if(len(to_display) > 17):
-            font_size = 20*17//len(to_display)
+        if(len(to_display) > 18):
+            font_size = int(18/len(to_display) * 20)
         else:
             font_size = 20
         FONT = 'Times '+str(font_size)
