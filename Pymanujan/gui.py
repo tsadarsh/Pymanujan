@@ -18,11 +18,16 @@ class GUI(Tk):
         self.title("Pymanujan (v2.0)")
         self.resizable(False, False)
         self.styler = ttk.Style()
-        self._layout = ['*', '/', 'C', 'AC',
+        self._old_layout = ['*', '/', 'C', 'AC',
                         '9', '8', '7', '-',
                         '6', '5', '4', '+',
                         '3', '2', '1', '+/-',
                         '.', '0', 'Copy', '=']
+        self._layout = ['AC', 'C', '+/-', '/',
+                        '7', '8', '9', '*',
+                        '4', '5', '6', '-',
+                        '1', '2', '3', '+',
+                        '0', '.', 'copy', '=']
         self._adv_layout = ['(', ')', '^', 'C',
                             '*', 'sin', 'cos', 'tan',
                             '/', 'asin', 'acos', 'atan',
@@ -37,7 +42,8 @@ class GUI(Tk):
                                     padding=(0, 0, 0, 0),
                                     style='Outliner.TFrame')
         self.mainframe = ttk.Frame(self.content,
-                                   relief='flat')
+                                   relief='flat',
+                                   padding=(0, 0, 0, 0))
         self.mainframe2 = ttk.Frame(self.content)
         self.content.add(self.mainframe, text='            Basic           ')
         self.content.add(self.mainframe2, text='         Advanced          ')
@@ -51,28 +57,30 @@ class GUI(Tk):
         could be set using a YAML file.
         """
 
+        self.styler.configure("TFrame",
+                              foreground='snow',
+                              background='grey17')
         self.styler.configure("TLabel",
-                              foreground='gray1',
-                              background='pink1',
-                              font='Times 20')
+                              padding=(0,10,0,10),
+                              foreground='snow',
+                              background='grey17',
+                              font='Times 25')
         self.styler.configure("TButton",
-                              font='Times 15 italic',
+                              font='Times 16 italic bold',
                               relief='flat',
-                              width='5',
-                              padding='7',
-                              foreground='snow',
-                              background='purple1')
+                              width='4',
+                              padding=(10,10,10,10),
+                              foreground='grey21',
+                              background='snow3')
         self.styler.configure("Numerals.TButton",
-                              font='Times 15',
+                              font='Times 16',
                               relief='flat',
-                              width='5',
-                              padding='7',
-                              foreground='snow',
-                              background='purple1')
+                              foreground='snow2',
+                              background='grey21')
         self.styler.configure("EqualButton.TButton",
                               relief='flat',
-                              background='DarkOrchid1',
-                              foreground='gray1')
+                              foreground='snow2',
+                              background='SpringGreen3')
         self.styler.configure("Outliner.TFrame",
                               background='snow2')
 
@@ -104,7 +112,7 @@ class GUI(Tk):
         button_objects['=']['style'] = 'EqualButton.TButton'
 
         for button_char in self._layout:
-            if button_char.isnumeric():
+            if button_char.isnumeric() or button_char == '.' or button_char == 'copy':
                 button_objects[button_char]['style'] = "Numerals.TButton"
 
         keypad.grid()
@@ -182,9 +190,12 @@ class GUI(Tk):
                    '!': 'x!',
                    '\r': '=',
                    '\x08': 'C',
-                   'b': 'C'}
+                   'b': 'C',
+                   '!': 'x!'}
         if e.char.lower() in self._layout:
-            self._button_invoke(e.char)
+            self._button_invoke(e.char.lower())
+        elif e.char.lower() in self._adv_layout:
+            self._button_invoke(e.char.lower())
         elif e.char.lower() in key_map:
             self._button_invoke(key_map[e.char.lower()])
         elif e.char.lower() == 'q':
@@ -200,10 +211,10 @@ class GUI(Tk):
 
     def _adjust_and_set_TLabel_font(self, to_display):
         """Dynamic font size setting for display label widget."""
-        if(len(to_display) > 18):
-            font_size = int(18/len(to_display) * 20)
+        if(len(to_display) >= 14):
+            font_size = int(14/len(to_display) * 25)
         else:
-            font_size = 20
+            font_size = 25
         FONT = 'Times '+str(font_size)
         self.styler.configure("TLabel", font=FONT)
         self.label_text.set(to_display)
