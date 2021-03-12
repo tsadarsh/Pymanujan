@@ -2,7 +2,10 @@ from tkinter import Tk
 from tkinter import ttk
 from tkinter import StringVar
 
-from pyperclip import copy as to_clipboard
+try:
+	from pyperclip import copy as to_clipboard
+except:
+	pass
 
 from .storage import Storage
 from .core_logic import Calculate
