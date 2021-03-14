@@ -4,7 +4,8 @@ from tkinter import StringVar
 
 try:
     from pyperclip import copy as to_clipboard
-except:
+except ModuleNotFoundError:
+    print("Install pyperclip library to use Copy function")
     pass
 
 from .storage import Storage
@@ -22,10 +23,10 @@ class GUI(Tk):
         self.resizable(False, False)
         self.styler = ttk.Style()
         self._old_layout = ['*', '/', 'C', 'AC',
-                        '9', '8', '7', '-',
-                        '6', '5', '4', '+',
-                        '3', '2', '1', '+/-',
-                        '.', '0', 'Copy', '=']
+                            '9', '8', '7', '-',
+                            '6', '5', '4', '+',
+                            '3', '2', '1', '+/-',
+                            '.', '0', 'Copy', '=']
         self._layout = ['AC', 'C', '+/-', '/',
                         '7', '8', '9', '*',
                         '4', '5', '6', '-',
@@ -64,7 +65,7 @@ class GUI(Tk):
                               foreground='snow',
                               background='grey17')
         self.styler.configure("TLabel",
-                              padding=(0,10,0,10),
+                              padding=(0, 10, 0, 10),
                               foreground='snow',
                               background='grey17',
                               font='Times 25')
@@ -72,7 +73,7 @@ class GUI(Tk):
                               font='Times 16 italic bold',
                               relief='flat',
                               width='4',
-                              padding=(10,10,10,10),
+                              padding=(10, 10, 10, 10),
                               foreground='grey21',
                               background='snow3')
         self.styler.configure("Numerals.TButton",
@@ -115,7 +116,11 @@ class GUI(Tk):
         button_objects['=']['style'] = 'EqualButton.TButton'
 
         for button_char in self._layout:
-            if button_char.isnumeric() or button_char == '.' or button_char == 'copy':
+            if button_char.isnumeric():
+                button_objects[button_char]['style'] = "Numerals.TButton"
+            elif button_char == '.':
+                button_objects[button_char]['style'] = "Numerals.TButton"
+            elif button_char == 'copy':
                 button_objects[button_char]['style'] = "Numerals.TButton"
 
         keypad.grid()
