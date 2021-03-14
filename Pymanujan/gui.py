@@ -3,9 +3,9 @@ from tkinter import ttk
 from tkinter import StringVar
 
 try:
-	from pyperclip import copy as to_clipboard
+    from pyperclip import copy as to_clipboard
 except:
-	pass
+    pass
 
 from .storage import Storage
 from .core_logic import Calculate
