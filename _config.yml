@@ -1,3 +1,4 @@
-theme: jekyll-theme-cayman
+theme: jekyll-theme-architect
 title: Pymanujan
 description: Check out the Github repository too. Good stuff over there too!
+show_downloads: true
