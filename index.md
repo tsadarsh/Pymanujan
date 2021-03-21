@@ -1,32 +1,43 @@
-# PyCalc
-### Python powered Calculator. As simple as that.
-#### Introduction
-Whole code is written in pure Python. Moreover, as a beginner myself, new developers and contribtors can easily go through the code to understand the logic behind the program. I tried to include as much as comments and documentations within the code itself. Feel free to ping me for any queries. This program has a lot of scope for improvement. **Development best-suited for new developers and programmers**, this simple program provides a stage for immense develpoment of one's skill, expertise and familiarity of Python programming language.
+# Pymanujan ♾️
+#### Python powered calculator; but without `eval()`.
 
-Currently the program supports 'Addition', 'Subtraction', 'Multiplication' and 'Division'. Check Tasks List issues pending on *feature-requests*. Check Contribution for more details to get started on developing the program.
+### Introduction
+Whole code is written in Python. New developers and contribtors can easily go through the code to understand the logic behind the program. I tried to include as much comments and documentations within the code itself. Feel free to ping me for any queries. Best-suited for new developers this simple program provides a stage for develpoment of one's skill, expertise and familiarity of Python programming language.
 
-#### User interface of PyCalc *v1.1*
+Pymanujan can do these now:
+  - ➕ Addition
+  - ➖ Subtraction
+  - ✖️ Multiplication
+  - ➗ Division
+  - ⭐ Exponentiation
+  - 🔺 Trigonometric functions
+  - 🔻 Inverse trigonometric functions
+  - ❗ Factorial
+  - 🌲 Logarithms
 
-![As of v1.1](https://raw.githubusercontent.com/maddypie/PyCalc/master/PyCalc-v1.1.png)
 
-#### Tasks List
-- [x] Refactor ~~source.py~~ source code.
-- [x] Add 'Copy' functionality, to copy the result. Currently 'Copy' button does not do anything.
-- [x] Dynamic font size in result label.
-- [x] Bind 'Number-pad' keys to enter input.
-- [ ] Option to switch between 'Simple' to 'Advanced' mode. Advanced mode should have more funtionalities.
+### User interface of Pymanujan (v2.0) :desktop_computer:
 
-#### Contribution
-All are welcome to contribute to this project. **Documentation will be out soon.** Currently the focus is on improving the GUI layout and themes for PyCalc. Create an *Issue* and start a discussion before working on a seperate *Fork*, collabaration always results in better ideas! The code base is failry small and modular. As mentioned before, feel free to ping me for any clarrifications.
+![Pymanujan (v2 0)](https://user-images.githubusercontent.com/66778010/110975666-081e6c80-8386-11eb-9495-cf6b94204813.png)
 
-Goal towards your contribution should always be to improve expertise on Python.
 
-#### Note for Linux users:
-For 'Copy' button to work as intended, make sure ```xclip``` is installed.
+### Build Pymanujan yourself:
+Clone this repository from Github. Then create a virtual-environment and install the dependencies.
+```bash
+git clone https://github.com/tsadarsh/Pymanujan.git
+cd ./Pymanujan
+python3 -m venv env
+source env/bin/activate
+python -m pip install -r requirements.txt
+python main.py
+```
 
-Distribution | Installation command
--------------|---------------------
-Debian | `sudo apt install xclip`
-Fedora based distro | `dnf install xclip`
-CentOS based distro | `yum install xclip`
-OpenSUSE based distro | `zypper install xclip`
+### Contribution :nerd_face:
+All are welcome to contribute to this project. 
+Create new Issue for feature-request or bug reports.
+Implemented a new feature? Awesome give a PR. 
+
+
+Goal is to improve expertise on Python :snake:.
+> "Though a calculator app is no path-breaking project to work on, it gives confidence to a new-devloper the abilty to build something from scratch"
+> -maddypie
